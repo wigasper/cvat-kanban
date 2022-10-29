@@ -40,6 +40,8 @@ services:
       - "8000:8000"
     depends_on:
       - loaddata
+    env:
+      SECRET_KEY: $SECRET_KEY
         #networks:
         #- main
   ui:
