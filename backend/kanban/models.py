@@ -1,6 +1,8 @@
 from typing import Tuple, List, Dict
 
 from django.db import models
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 
 class KanbanColumn(models.Model):
@@ -20,3 +22,7 @@ class KanbanColumn(models.Model):
 class KanbanCard(models.Model):
     name = models.CharField("Card name", max_length=24)
     column = models.ForeignKey(KanbanColumn, on_delete=models.SET_NULL, null=True)
+    position = models.PositiveIntegerField()
+    user = models.ForeignKey(
+        User, related_name="cards", on_delete=models.SET_NULL, null=True
+    )

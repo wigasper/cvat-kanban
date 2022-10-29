@@ -46,6 +46,13 @@
 			"name": "make dinner",
 			"column": 2
 		}
-	}
-	
+	},
+	{
+		"model": "auth.user",
+		"pk": 1,
+		"fields": {
+			"username": "alice",
+			"password": "anchovies"
+		}
+	}	
 ]

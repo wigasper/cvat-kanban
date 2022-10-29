@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Command(BaseCommand):
-    help = "DEV COMMAND: Fill databasse with a set of data for testing purposes"
+    help = "DEV COMMAND: Add fixture data"
 
     def handle(self, *args, **options):
         call_command("loaddata", "init")
