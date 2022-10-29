@@ -1,0 +1,64 @@
+version: "3.3"
+   
+services:
+  db:
+    image: postgres
+    volumes:
+      - db:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+        #networks:
+        #- main
+  makemigrations:
+    build: .
+    image: app
+    command: python /src/backend/manage.py makemigrations
+    volumes:
+      - .:/src
+    depends_on:
+      - db 
+  migrate:
+    image: app
+    command: python /src/backend/manage.py migrate
+    volumes:
+      - .:/src
+    depends_on:
+      - makemigrations
+  loaddata:
+    image: app
+    command: python /src/backend/manage.py initdata
+    volumes:
+      - .:/src
+    depends_on:
+      - migrate
+  web:
+    image: app
+    command: python /src/backend/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/src
+    ports:
+      - "8000:8000"
+    depends_on:
+      - loaddata
+        #networks:
+        #- main
+  ui:
+    container_name: kanban_ui
+    restart: always
+    command: npm start
+    depends_on:
+      - web
+    build:
+      context: .
+      dockerfile: Dockerfile.ui
+    ports:
+       - "3000:3000"
+      #networks:
+      #- main
+
+volumes:
+  db:
+
+    #networks:
+    #main:
+    #driver: bridge
