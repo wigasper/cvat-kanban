@@ -18,7 +18,7 @@ class KanbanCardSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.KanbanCard
-        fields = ["name", "column"]
+        fields = ["name", "column", "position"]
 
 
 class UserSerializer(serializers.ModelSerializer):
