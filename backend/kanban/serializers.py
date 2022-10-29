@@ -23,7 +23,7 @@ class KanbanCardSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     cards = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=models.KanbanCards.objects.all()
+        many=True, queryset=models.KanbanCard.objects.all()
     )
 
     class Meta:
