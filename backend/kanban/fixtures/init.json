@@ -1,0 +1,51 @@
+[
+	{
+		"model": "kanban.kanbancolumn",
+		"pk": 1,
+		"fields": {
+			"name": "To Do",
+			"position": 0
+		}
+	},
+		{
+		"model": "kanban.kanbancolumn",
+		"pk": 2,
+		"fields": {
+			"name": "In Progress",
+			"position": 1
+		}
+	},
+	{
+		"model": "kanban.kanbancolumn",
+		"pk": 3,
+		"fields": {
+			"name": "Done",
+			"position": 2
+		}
+	},
+	{
+		"model": "kanban.kanbancard",
+		"pk": 1,
+		"fields": {
+			"name": "Make kanban board backend",
+			"column": 2
+		}
+	},
+	{
+		"model": "kanban.kanbancard",
+		"pk": 2,
+		"fields": {
+			"name": "Make kanban board frontend",
+			"column": 1
+		}
+	},
+	{
+		"model": "kanban.kanbancard",
+		"pk": 3,
+		"fields": {
+			"name": "make dinner",
+			"column": 2
+		}
+	}
+	
+]
