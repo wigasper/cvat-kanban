@@ -32,7 +32,6 @@ jobs:
         run: pip install -r backend/requirements.txt
       - name: Set up DB
         run: |
-          python3 backend/manage.py loaddata init
           python3 backend/manage.py makemigrations
           python3 backend/manage.py migrate
         env:
