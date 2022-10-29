@@ -54,3 +54,5 @@ jobs:
           project_path: backend
           output_path: ../development/db_schema.png
           pip_path: backend/requirements.txt
+        env:
+          SECRET_KEY: TESTING_KEY
