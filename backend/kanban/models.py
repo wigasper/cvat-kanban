@@ -14,7 +14,7 @@ class KanbanColumn(models.Model):
 
         return out
 
-    name = models.CharField("List name", max_length=24)
+    name = models.CharField("List name", max_length=120)
     position = models.PositiveIntegerField(default=get_default_position)
 
     class Meta:
@@ -33,7 +33,7 @@ class KanbanCard(models.Model):
 
         return out
 
-    name = models.CharField("Card name", max_length=24)
+    name = models.CharField("Card name", max_length=120)
     column = models.ForeignKey(KanbanColumn, on_delete=models.SET_NULL, null=True)
     position = models.PositiveIntegerField(default=get_default_position)
     user = models.ForeignKey(
