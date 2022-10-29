@@ -11,7 +11,7 @@ class KanbanColumnSerializer(serializers.ModelSerializer):
 
 class KanbanCardSerializer(serializers.ModelSerializer):
 
-    column = serializers.PrimaryKeyRelatedfield(
+    column = serializers.PrimaryKeyRelatedField(
         many=False, queryset=models.KanbanColumn.objects.all()
     )
 
