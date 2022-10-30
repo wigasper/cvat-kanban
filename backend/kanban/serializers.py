@@ -5,9 +5,13 @@ from kanban import models
 
 
 class KanbanColumnSerializer(serializers.ModelSerializer):
+    cards = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=models.KanbanCard.objects.all()
+    )
+
     class Meta:
         model = models.KanbanColumn
-        fields = ["name", "position"]
+        fields = ["id", "name", "position", "cards"]
 
 
 class KanbanCardSerializer(serializers.ModelSerializer):
@@ -16,9 +20,11 @@ class KanbanCardSerializer(serializers.ModelSerializer):
         many=False, queryset=models.KanbanColumn.objects.all()
     )
 
+    user = serializers.PrimaryKeyRelatedField(many=False, queryset=User.objects.all())
+
     class Meta:
         model = models.KanbanCard
-        fields = ["name", "column", "position"]
+        fields = ["id", "name", "column", "position", "user"]
 
 
 class UserSerializer(serializers.ModelSerializer):
