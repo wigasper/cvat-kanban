@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth.models import User
 
 from kanban import models
 
@@ -17,4 +18,14 @@ class KanbanCardSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.KanbanCard
-        fields = ["name", "column"]
+        fields = ["name", "column", "position"]
+
+
+class UserSerializer(serializers.ModelSerializer):
+    cards = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=models.KanbanCard.objects.all()
+    )
+
+    class Meta:
+        model = User
+        fields = ["id", "username", "cards"]

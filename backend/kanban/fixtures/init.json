@@ -28,7 +28,8 @@
 		"pk": 1,
 		"fields": {
 			"name": "Make kanban board backend",
-			"column": 2
+			"column": 2,
+			"position": 0
 		}
 	},
 	{
@@ -36,7 +37,8 @@
 		"pk": 2,
 		"fields": {
 			"name": "Make kanban board frontend",
-			"column": 1
+			"column": 1,
+			"position": 0
 		}
 	},
 	{
@@ -44,8 +46,16 @@
 		"pk": 3,
 		"fields": {
 			"name": "make dinner",
-			"column": 2
+			"column": 2,
+			"position": 2
 		}
-	}
-	
+	},
+	{
+		"model": "auth.user",
+		"pk": 1,
+		"fields": {
+			"username": "alice",
+			"password": "anchovies"
+		}
+	}	
 ]
