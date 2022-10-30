@@ -91,3 +91,9 @@ As a **vindictive team leader**, I want to **cause a major disruption by moving 
 ### Team leader/project manager user story mockup
 
 [This mockup is shown here.](assets/team_leader_mockup.jpg)
+
+### Modal mockup
+
+A potential modal for a card:
+
+![alt text](https://github.com/wigasper/cvat-kanban/raw/main/docs/assets/modal.jpg)
