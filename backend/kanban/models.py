@@ -34,8 +34,13 @@ class KanbanCard(models.Model):
         return out
 
     name = models.CharField("Card name", max_length=120)
-    column = models.ForeignKey(KanbanColumn, on_delete=models.SET_NULL, null=True)
+
+    column = models.ForeignKey(
+        KanbanColumn, related_name="cards", on_delete=models.SET_NULL, null=True
+    )
+
     position = models.PositiveIntegerField(default=get_default_position)
+
     user = models.ForeignKey(
         User, related_name="cards", on_delete=models.SET_NULL, null=True
     )
