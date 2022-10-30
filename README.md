@@ -11,7 +11,7 @@ not present in general purpose kanban board web apps.
 ## Installation
 
 Currently, only a development deployment is supported. This is
-intended for use in a production environment.
+not intended for use in a production environment.
 
 ```bash
 # clone the repo, set up .env
