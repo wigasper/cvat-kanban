@@ -97,3 +97,7 @@ As a **vindictive team leader**, I want to **cause a major disruption by moving 
 A potential modal for a card:
 
 ![alt text](https://github.com/wigasper/cvat-kanban/raw/main/docs/assets/modal.jpg)
+
+## Architecture diagram
+
+![alt text](https://github.com/wigasper/cvat-kanban/raw/main/docs/assets/c4.jpg)
