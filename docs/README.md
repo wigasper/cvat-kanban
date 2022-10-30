@@ -75,3 +75,19 @@ As a **vindictive team leader**, I want to **cause a major disruption by moving 
 ### Mitigation criteria
 
 * Kanban board data is quite small and can easily be represented in plain text (JSON, or other), and changes can be tracked with `git`: each change can cause a commit, and then any destructive actions can be easily reverted.
+
+# Diagrams
+
+## Mockups
+
+### Refinement team member user story mockup
+
+![alt text](https://github.com/wigasper/cvat-kanban/raw/main/docs/assets/refinement_member_mockup.jpg)
+
+### Pathologist team member user story mockup
+
+[This mockup is shown here.](assets/pathologist_mockup.jpg)
+
+### Team leader/project manager user story mockup
+
+[This mockup is shown here.](assets/team_leader_mockup.jpg)
