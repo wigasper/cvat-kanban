@@ -52,7 +52,7 @@ jobs:
         uses: noah-software/django_action@c045cd21a1d58a0d39b441f729ad12c8062da155
         with:
           project_path: backend
-          output_path: ../development/db_schema.png
+          output_path: ../docs/db_schema.png
           pip_path: backend/requirements.txt
         env:
           SECRET_KEY: TESTING_KEY
