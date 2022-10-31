@@ -6,12 +6,12 @@ import 'antd/dist/antd.css';
 
 import { Card } from "antd";
 
-function KanbanColumnComponent(columnID) {
+function KanbanColumnComponent() {
 	const [column, setColumn] = useState({ name: "" });
   
   useEffect(() => {
     let mounted = true;
-    getColumn(columnID)
+    getColumn("1")
       .then((res) => {
         if (mounted) {
           setColumn(res)
@@ -24,14 +24,16 @@ function KanbanColumnComponent(columnID) {
 
   const renderColumn = () => {
     return (
-      <Card title=column.name style={{ width: 300 }}>
+      <Card title={column.name} style={{ width: 300 }}>
         <p>tester</p>
       </Card>
     );
   };
   
   return (
+  <div>
     {renderColumn()}
+  </div>
   );
 }
 

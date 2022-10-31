@@ -1,6 +1,6 @@
 import logo from '../logo.svg';
 import 'antd/dist/antd.css';
-import KanbanColumnComponent from "kanban-page/kanban-column";
+import KanbanColumnComponent from "./kanban-page/kanban-column";
 
 function App() {
   return (
