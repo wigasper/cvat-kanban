@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 
 import { getColumn } from "../../services/column";
 
-//import 'antd/dist/antd.css';
+import 'antd/dist/antd.css';
 
 import { Card } from "antd";
 
+import KanbanCardComponent from "./kanban-card";
+
+import { Row } from 'antd';
+
 function KanbanColumnComponent({ columnID }) {
-	const [column, setColumn] = useState({ name: "" });
+	const [column, setColumn] = useState({ name: "" , cards: []});
   
   useEffect(() => {
     let mounted = true;
@@ -23,9 +27,14 @@ function KanbanColumnComponent({ columnID }) {
   }, [columnID]);
 
   const renderColumn = () => {
+    console.log(column)
     return (
       <Card title={column.name} style={{ width: 600 }}>
-        <p>tester</p>
+        {column.cards.map(card => (
+          <Row key={card}>
+            <KanbanCardComponent cardID={card} />
+          </Row>
+        ))}
       </Card>
     );
   };
