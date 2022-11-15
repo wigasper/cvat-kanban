@@ -4,3 +4,10 @@ export function getColumn(id) {
     res.json()
   );
 }
+
+export function getColumns() {
+	return fetch(`http://localhost:8000/kanban/columns/`).then((res) =>
+    res.json()
+  );
+
+}
