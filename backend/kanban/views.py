@@ -13,13 +13,15 @@ from django.contrib.auth.models import User
 class KanbanColumnViewSet(viewsets.ModelViewSet):
     queryset = models.KanbanColumn.objects.all()
     serializer_class = serializers.KanbanColumnSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    #FIXME temp for dev
+    permission_classes = [permissions.AllowAny]
 
 
 class KanbanCardViewSet(viewsets.ModelViewSet):
     queryset = models.KanbanCard.objects.all()
     serializer_class = serializers.KanbanCardSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # FIXME temp for dev
+    permission_classes = [permissions.AllowAny]
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):

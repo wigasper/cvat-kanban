@@ -29,7 +29,6 @@ function KanbanColumnComponent({ columnID }) {
   }, [columnID]);
  
   const renderColumn = () => {
-    console.log(column)
     return (
       <>	
       <Card title={column.name} style={{ width: 400 }}>
@@ -39,7 +38,7 @@ function KanbanColumnComponent({ columnID }) {
           </Row>
         ))}
       </Card>
-      <AddCardModalComponent />
+      <AddCardModalComponent columnID={columnID} />
       </>
     );
   };

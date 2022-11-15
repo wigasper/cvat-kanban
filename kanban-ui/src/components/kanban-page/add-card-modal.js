@@ -4,7 +4,9 @@ import 'antd/dist/antd.css';
 
 import { Row, Button, Modal, Form, Input } from 'antd';
 
-function AddCardModalComponent() {
+import { addCard } from "../../services/card";
+
+function AddCardModalComponent({ columnID }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmModalLoading, setConfirmModalLoading] = useState(false);
   const [modalText, setModalText] = useState('tester');
@@ -12,7 +14,10 @@ function AddCardModalComponent() {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
+    values["user"] = 1;
+    values["column"] = columnID;
 
+    addCard(values);
     console.log(values);
   };
   
@@ -60,7 +65,7 @@ function AddCardModalComponent() {
     setTimeout(() => {
       setModalOpen(false);
       setConfirmModalLoading(false);
-    }, 2000);
+    }, 1000);
   };
   
   const handleCancel = () => {
