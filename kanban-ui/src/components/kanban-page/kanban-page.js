@@ -24,13 +24,13 @@ function KanbanPageComponent() {
     return () => (mounted = false);
   }, []);
   
-  const renderColumns = () => {
+ /* const renderColumns = () => {
     return columns.map((column) => (
       <Col key={column.id} xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
         <KanbanColumnComponent columnID={column.id} /> 
       </Col>
     ));
-  };
+  };*/
   
   const renderPage = () => {
     return (

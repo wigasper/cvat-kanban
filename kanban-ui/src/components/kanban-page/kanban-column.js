@@ -8,11 +8,13 @@ import { Card } from "antd";
 
 import KanbanCardComponent from "./kanban-card";
 
-import { Row } from 'antd';
+import AddCardModalComponent from "./add-card-modal";
+
+import { Row, Button, Modal, Form, Input } from 'antd';
 
 function KanbanColumnComponent({ columnID }) {
 	const [column, setColumn] = useState({ name: "" , cards: []});
-  
+
   useEffect(() => {
     let mounted = true;
     getColumn(columnID)
@@ -25,17 +27,20 @@ function KanbanColumnComponent({ columnID }) {
 
     return () => (mounted = false);
   }, [columnID]);
-
+ 
   const renderColumn = () => {
     console.log(column)
     return (
-      <Card title={column.name} style={{ width: 600 }}>
+      <>	
+      <Card title={column.name} style={{ width: 400 }}>
         {column.cards.map(card => (
           <Row key={card}>
             <KanbanCardComponent cardID={card} />
           </Row>
         ))}
       </Card>
+      <AddCardModalComponent />
+      </>
     );
   };
   
