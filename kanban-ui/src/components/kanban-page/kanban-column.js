@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import { getColumn } from "../../services/column";
 
+import { Droppable } from "react-beautiful-dnd";
+
 import 'antd/dist/antd.css';
 
 import { Card } from "antd";
@@ -13,7 +15,7 @@ import AddCardModalComponent from "./add-card-modal";
 import { Row, Button, Modal, Form, Input } from 'antd';
 
 function KanbanColumnComponent({ columnID }) {
-	const [column, setColumn] = useState({ name: "" , cards: []});
+	const [column, setColumn] = useState({ name: "a" , cards: []});
   const [refreshCount, setRefreshCount] = useState(0);
   
   const getCol = mounted => {
@@ -36,15 +38,25 @@ function KanbanColumnComponent({ columnID }) {
  
   const renderColumn = () => {
     return (
-      <>	
-      <Card title={column.name} style={{ width: 300 }}>
-        {column.cards.map(card => (
-          <Row key={card.id}>
-            <KanbanCardComponent card={card} />
-          </Row>
-        ))}
-      </Card>
-      <AddCardModalComponent columnID={columnID} onSubmit={getCol} />
+      <>
+        <Droppable droppableId={column.name}>
+          {provided => (
+            <Card 
+              title={column.name} 
+              style={{ width: 300 }} 
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {column.cards.map((card, index) => (
+                <Row key={card.id}>
+                  <KanbanCardComponent card={card} index={index}/>
+                </Row>
+              ))}
+              {provided.placeholder}
+            </Card>
+          )}
+        </Droppable>
+        <AddCardModalComponent columnID={columnID} onSubmit={getCol} />
       </>
     );
   };
