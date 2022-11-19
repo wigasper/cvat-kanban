@@ -161,9 +161,9 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.ScopedRateThrottle",
     ),
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "60/minute",
-        "user": "60/minute",
-        "/api/get-items": "60/minute",
+        "anon": "180/minute",
+        "user": "180/minute",
+        "/api/get-items": "180/minute",
     },
 }
 

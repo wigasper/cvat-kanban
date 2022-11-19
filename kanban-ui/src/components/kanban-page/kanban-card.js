@@ -24,7 +24,7 @@ function KanbanCardComponent({ cardID }) {
 
   const renderCard = () => {
     return (
-      <Card title={card.name} style={{ width: 300 }} />
+      <Card size="small" title={card.name} bordered={false} />
     );
   };
   

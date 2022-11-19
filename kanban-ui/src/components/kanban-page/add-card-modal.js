@@ -6,7 +6,7 @@ import { Row, Button, Modal, Form, Input } from 'antd';
 
 import { addCard } from "../../services/card";
 
-function AddCardModalComponent({ columnID }) {
+function AddCardModalComponent({ columnID, onSubmit }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmModalLoading, setConfirmModalLoading] = useState(false);
   const [modalText, setModalText] = useState('tester');
@@ -18,6 +18,7 @@ function AddCardModalComponent({ columnID }) {
     values["column"] = columnID;
 
     addCard(values);
+    onSubmit(true);
     console.log(values);
   };
   

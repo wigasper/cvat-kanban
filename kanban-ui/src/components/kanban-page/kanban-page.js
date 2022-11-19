@@ -34,7 +34,7 @@ function KanbanPageComponent() {
   
   const renderPage = () => {
     return (
-      <Row>
+      <Row gutter={16}>
         {columns.map((column) => (
           <Col key={column.id} xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
             <KanbanColumnComponent columnID={column.id} /> 
