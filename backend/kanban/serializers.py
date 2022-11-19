@@ -19,6 +19,10 @@ class KanbanCardSerializer(serializers.ModelSerializer):
 class KanbanColumnSerializer(serializers.ModelSerializer):
     cards = KanbanCardSerializer(read_only=True, many=True)
 
+    # board = serializers.PrimaryKeyRelatedField(
+    #    many=False, queryset=models.KanbanBoard.objects.all()
+    # )
+
     class Meta:
         model = models.KanbanColumn
         fields = ["id", "name", "position", "board", "cards"]

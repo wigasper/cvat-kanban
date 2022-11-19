@@ -26,7 +26,7 @@ class KanbanColumn(models.Model):
     position = models.PositiveIntegerField(default=get_default_position)
 
     board = models.ForeignKey(
-        KanbanBoard, related_name="boards", on_delete=models.SET_NULL, null=True
+        KanbanBoard, related_name="columns", on_delete=models.SET_NULL, null=True
     )
 
     class Meta:
@@ -52,9 +52,6 @@ class KanbanCard(models.Model):
     )
 
     position = models.PositiveIntegerField(default=get_default_position)
-
-    #    board = models.ForeignKey(KanbanBoard, related_name="boards",
-    #                              on_delete=models.SET_NULL, null=True)
 
     user = models.ForeignKey(
         User, related_name="cards", on_delete=models.SET_NULL, null=True
