@@ -16,6 +16,7 @@ function AddCardModalComponent({ columnID, onSubmit }) {
   const onFinish = (values) => {
     values["user"] = 1;
     values["column"] = columnID;
+    values["board"] = 1;
 
     addCard(values);
     onSubmit(true);

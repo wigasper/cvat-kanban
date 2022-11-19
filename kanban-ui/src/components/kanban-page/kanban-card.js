@@ -2,25 +2,11 @@ import React, { useState, useEffect } from "react";
 
 import { getCard } from "../../services/card";
 
-//import 'antd/dist/antd.css';
+import 'antd/dist/antd.css';
 
 import { Card } from "antd";
 
-function KanbanCardComponent({ cardID }) {
-	const [card, setCard] = useState({ name: "" });
-  
-  useEffect(() => {
-    let mounted = true;
-    getCard(cardID)
-      .then((res) => {
-        if (mounted) {
-          setCard(res)
-        }
-      })
-      .catch((err) => console.log(err));
-
-    return () => (mounted = false);
-  }, [cardID]);
+function KanbanCardComponent({ card }) {
 
   const renderCard = () => {
     return (

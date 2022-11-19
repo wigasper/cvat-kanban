@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import KanbanColumnComponent from "./kanban-column";
 
 import { getColumns } from "../../services/column";
+import { getBoard } from "../../services/board";
 
 import { Col, Row } from 'antd';
 
@@ -13,10 +14,12 @@ function KanbanPageComponent() {
   
   useEffect(() => {
     let mounted = true;
-    getColumns()
+    getBoard(1)
       .then((res) => {
         if (mounted) {
-          setColumns(res)
+          console.log(res.columns);
+          setColumns(res.columns);
+          console.log(columns);
         }
       })
       .catch((err) => console.log(err));

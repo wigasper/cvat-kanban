@@ -28,15 +28,9 @@ function KanbanColumnComponent({ columnID }) {
 
   useEffect(() => {
     let mounted = true;
- /*   getColumn(columnID)
-      .then((res) => {
-        if (mounted) {
-          setColumn(res)
-        }
-      })
-      .catch((err) => console.log(err));
-*/
+    
     getCol(mounted);
+    
     return () => (mounted = false);
   }, [columnID]);
  
@@ -45,8 +39,8 @@ function KanbanColumnComponent({ columnID }) {
       <>	
       <Card title={column.name} style={{ width: 300 }}>
         {column.cards.map(card => (
-          <Row key={card}>
-            <KanbanCardComponent cardID={card} />
+          <Row key={card.id}>
+            <KanbanCardComponent card={card} />
           </Row>
         ))}
       </Card>
