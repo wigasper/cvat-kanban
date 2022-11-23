@@ -13,3 +13,13 @@ export function getCard(id) {
     res.json()
   );
 }
+
+export function patchCard(id, changes) {
+  return fetch(`http://localhost:8000/kanban/cards/${id}/`,
+        {method: "PATCH",
+      mode: "cors",
+    headers: {"Accept": "application/json", 
+              "Content-Type": "application/json"},
+    body: JSON.stringify(changes)}
+  )
+}

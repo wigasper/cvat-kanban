@@ -12,7 +12,7 @@ function KanbanCardComponent({ card, index }) {
 
   const renderCard = () => {
     return (
-      <Draggable draggableId={card.id + ''} index={index}>
+      <Draggable draggableId={card.id + ''} index={card.position}>
         {(provided) => (
           <Card 
             size="small" 

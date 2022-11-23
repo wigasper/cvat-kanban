@@ -5,6 +5,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import KanbanColumnComponent from "./kanban-column";
 
 import { getColumns } from "../../services/column";
+import { patchCard } from "../../services/card";
 import { getBoard } from "../../services/board";
 
 import { Col, Row } from 'antd';
@@ -13,12 +14,17 @@ import 'antd/dist/antd.css';
 
 function KanbanPageComponent() {
   const [columns, setColumns] = useState([ ]);
-  
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    let mounted = true;
+    //setTimeout(() => {
+    //  setLoading(true);
+    //}, 3000);
+    //setLoading(true);
+    // let loading = true;
     getBoard(1)
       .then((res) => {
-        if (mounted) {
+        if (loading) {
           console.log(res.columns);
           setColumns(res.columns);
           console.log(columns);
@@ -26,8 +32,8 @@ function KanbanPageComponent() {
       })
       .catch((err) => console.log(err));
 
-    return () => (mounted = false);
-  }, []);
+    return () => (setLoading(false));
+  }, [columns]);
   
  /* const renderColumns = () => {
     return columns.map((column) => (
@@ -69,14 +75,28 @@ function KanbanPageComponent() {
     newCards.splice(destination.index, 0, thisCard);
     
     thisColumn.cards = newCards;
+    
+    thisColumn.cards.forEach((card, index) => {
+      if (card.position !== index) {
+        //card.position = index;
+        patchCard(card.id, {"position": index});
+      }
+    }
+    );
 
     const columnsCopy = Array.from(columns);
     columnsCopy[thisColumnIndex] = thisColumn;
-    
-    console.log(columnsCopy);
-
+    console.log("THIS COLUMN");
+    console.log(thisColumn);
+    //console.log(columnsCopy);
+    //setLoading(true);
     setColumns(columnsCopy);
+    setLoading(true);
+    console.log("ALL COLUMNS");
+    console.log(columns);
+    
     // maybe instead issue a patch here and then refresh
+    //patchColumn(thisColumn, thisColumn.id);
   }
 
   const renderPage = () => {
