@@ -5,6 +5,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
 
+class KanbanBoard(models.Model):
+    name = models.CharField("List name", max_length=120)
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class KanbanColumn(models.Model):
     def get_default_position() -> int:
         out = 0
@@ -15,7 +22,12 @@ class KanbanColumn(models.Model):
         return out
 
     name = models.CharField("List name", max_length=120)
+
     position = models.PositiveIntegerField(default=get_default_position)
+
+    board = models.ForeignKey(
+        KanbanBoard, related_name="columns", on_delete=models.SET_NULL, null=True
+    )
 
     class Meta:
         ordering = ["position"]
