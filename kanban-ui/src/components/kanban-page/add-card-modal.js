@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 
-import 'antd/dist/antd.css';
+import "antd/dist/antd.css";
 
-import { Row, Button, Modal, Form, Input } from 'antd';
+import { Row, Button, Modal, Form, Input } from "antd";
 
 import { addCard } from "../../services/card";
 
 function AddCardModalComponent({ columnID, onSubmit }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmModalLoading, setConfirmModalLoading] = useState(false);
-  const [modalText, setModalText] = useState('tester');
-  
+  const [modalText, setModalText] = useState("tester");
+
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
@@ -22,7 +22,7 @@ function AddCardModalComponent({ columnID, onSubmit }) {
     onSubmit(true);
     console.log(values);
   };
-  
+
   const onReset = () => {
     form.resetFields();
   };
@@ -59,9 +59,9 @@ function AddCardModalComponent({ columnID, onSubmit }) {
       </div>
     );
   };
-  
+
   const handleAddCard = () => {
-    setModalText('Adding card');
+    setModalText("Adding card");
     form.submit();
     setConfirmModalLoading(true);
     setTimeout(() => {
@@ -69,18 +69,18 @@ function AddCardModalComponent({ columnID, onSubmit }) {
       setConfirmModalLoading(false);
     }, 1000);
   };
-  
+
   const handleCancel = () => {
     setModalOpen(false);
   };
 
   return (
-  <div>
-    <Button type="primary" onClick={showModal}>
-      Add card
-    </Button>
-    {renderModal()}
-  </div>
+    <div>
+      <Button type="primary" onClick={showModal}>
+        Add card
+      </Button>
+      {renderModal()}
+    </div>
   );
 }
 
