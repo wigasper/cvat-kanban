@@ -70,12 +70,12 @@ function KanbanPageComponent() {
   const renderPage = () => {
     return (
       <DragDropContext onDragEnd={onDragEnd}>
-        <Row gutter={16}>
+        <Row gutter={1}>
           {columns.map((column) => (
             <Col
               key={column.id}
-              xs={{ span: 5, offset: 1 }}
-              lg={{ span: 6, offset: 2 }}
+              xs={{ span: 3, offset: 1 }}
+              lg={{ span: 4, offset: 2 }}
             >
               <KanbanColumnComponent column={column} />
             </Col>
