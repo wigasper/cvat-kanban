@@ -20,7 +20,6 @@ function AddCardModalComponent({ columnID, onSubmit }) {
 
     addCard(values);
     onSubmit(true);
-    console.log(values);
   };
 
   const onReset = () => {

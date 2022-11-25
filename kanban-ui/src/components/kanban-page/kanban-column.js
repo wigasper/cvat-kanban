@@ -47,7 +47,7 @@ function KanbanColumnComponent({ column }) {
           {(provided) => (
             <Card
               title={column.name}
-              style={{ width: 300 }}
+              style={{ width: 300, marginTop: 16 }}
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
@@ -58,7 +58,6 @@ function KanbanColumnComponent({ column }) {
             </Card>
           )}
         </Droppable>
-        <AddCardModalComponent columnID={column.id} />
       </>
     );
   };

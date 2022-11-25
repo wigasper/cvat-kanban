@@ -7,6 +7,7 @@ import KanbanColumnComponent from "./kanban-column";
 import { getColumns } from "../../services/column";
 import { patchCard } from "../../services/card";
 import { getBoard } from "../../services/board";
+import AddCardModalComponent from "./add-card-modal";
 
 import { Col, Row } from "antd";
 
@@ -15,16 +16,29 @@ import "antd/dist/antd.css";
 function KanbanPageComponent() {
   const [columns, setColumns] = useState([{ name: "a", cards: [], id: 0 }]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
+  
+  const getThisBoard = loading => {
     getBoard(1)
       .then((res) => {
         if (loading) {
+          console.log("loading");
           setColumns(res.columns);
         }
       })
       .catch((err) => console.log(err));
+  };
 
+  useEffect(() => {
+    /*getBoard(1)
+      .then((res) => {
+        if (loading) {
+          console.log("loading");
+          setColumns(res.columns);
+        }
+      })
+      .catch((err) => console.log(err));
+    */
+    getThisBoard(loading);
     return () => setLoading(false);
   }, [columns]);
 
@@ -78,6 +92,10 @@ function KanbanPageComponent() {
               lg={{ span: 4, offset: 2 }}
             >
               <KanbanColumnComponent column={column} />
+              <AddCardModalComponent 
+                columnID={column.id} 
+                onSubmit={getThisBoard} 
+              />
             </Col>
           ))}
         </Row>
