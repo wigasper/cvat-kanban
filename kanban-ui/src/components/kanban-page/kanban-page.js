@@ -50,6 +50,7 @@ function KanbanPageComponent() {
   }, [columns]);
 
   const updateBackend = (column) => {
+    debugger
     column.cards.forEach((card, index) => {
       const cardUpdate = {};
 
@@ -64,6 +65,8 @@ function KanbanPageComponent() {
   };
 
   const onDragEnd = (res) => {
+    // some issue here in that the indices are not correct all the time
+    // seems to be exacerbated when making a list empty
     const { destination, source, draggableId } = res;
 
     if (!destination) {
@@ -80,21 +83,29 @@ function KanbanPageComponent() {
     const sourceColumn = columns.filter(function (col) {
       return col.name === source.droppableId;
     })[0];
-
     const sourceColumnIndex = columns.indexOf(sourceColumn);
+    //const sourceClone = { ...sourceColumn };
 
     const destColumn = columns.filter(function (col) {
       return col.name === destination.droppableId;
     })[0];
-
     const destColumnIndex = columns.indexOf(destColumn);
+    //const destClone = { ...destColumn };
 
     const newColumns = [...columns];
 
     const thisCard = { ...newColumns[sourceColumnIndex].cards[source.index] };
+    debugger
+    //const thisCard = { ...sourceClone.cards[source.index] };
 
     newColumns[sourceColumnIndex].cards.splice(source.index, 1);
+    //sourceClone.cards.splice(source.index, 1);
     newColumns[destColumnIndex].cards.splice(destination.index, 0, thisCard);
+    //destClone.cards.splice(destination.index, 0, thisCard);
+   // debugger
+
+    //newColumns[sourceColumnIndex] = sourceClone;
+    //newColumns[destColumnIndex] = destClone;
     /*
     newColumns[sourceColumnIndex].cards.forEach((card, index) => {
       if (card.position !== index) {
