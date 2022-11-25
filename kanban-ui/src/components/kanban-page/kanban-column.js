@@ -52,9 +52,7 @@ function KanbanColumnComponent({ column }) {
               {...provided.droppableProps}
             >
               {column.cards.map((card, index) => (
-                <Row key={card.id}>
-                  <KanbanCardComponent card={card} index={index} />
-                </Row>
+                <KanbanCardComponent card={card} index={index} />
               ))}
               {provided.placeholder}
             </Card>
