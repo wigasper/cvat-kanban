@@ -9,12 +9,12 @@ import { patchCard } from "../../services/card";
 import { getBoard } from "../../services/board";
 import AddCardModalComponent from "./add-card-modal";
 
-import { Col, Row } from "antd";
+import { Col, Row, Spin } from "antd";
 
 import "antd/dist/antd.css";
 
 function KanbanPageComponent() {
-  const [columns, setColumns] = useState([{ name: "a", cards: [], id: 0 }]);
+  const [columns, setColumns] = useState([{ name: "initstate", cards: [], id: 0 }]);
   const [loading, setLoading] = useState(true);
   
   const getThisBoard = loading => {
@@ -29,15 +29,6 @@ function KanbanPageComponent() {
   };
 
   useEffect(() => {
-    /*getBoard(1)
-      .then((res) => {
-        if (loading) {
-          console.log("loading");
-          setColumns(res.columns);
-        }
-      })
-      .catch((err) => console.log(err));
-    */
     getThisBoard(loading);
     return () => setLoading(false);
   }, [columns]);
@@ -62,7 +53,6 @@ function KanbanPageComponent() {
 
     const thisColumnIndex = columns.indexOf(thisColumn);
 
-    /// revised
     const newColumns = [...columns];
 
     const thisCard = { ...newColumns[thisColumnIndex].cards[source.index] };
@@ -82,25 +72,35 @@ function KanbanPageComponent() {
   };
 
   const renderPage = () => {
-    return (
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Row gutter={1}>
-          {columns.map((column) => (
-            <Col
-              key={column.id}
-              xs={{ span: 3, offset: 1 }}
-              lg={{ span: 4, offset: 2 }}
-            >
-              <KanbanColumnComponent column={column} />
-              <AddCardModalComponent 
-                columnID={column.id} 
-                onSubmit={getThisBoard} 
-              />
-            </Col>
-          ))}
-        </Row>
-      </DragDropContext>
-    );
+    if (columns[0].name === "initstate") {
+      return (
+        <div>
+          <center>
+            <Spin style={{ padding: 40}} size="large" />
+          </center>
+        </div>
+      );
+    } else {
+      return(
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Row gutter={1}>
+            {columns.map((column) => (
+              <Col
+                key={column.id}
+                xs={{ span: 3, offset: 1 }}
+                lg={{ span: 4, offset: 2 }}
+              >
+                <KanbanColumnComponent column={column} />
+                <AddCardModalComponent 
+                  columnID={column.id} 
+                  onSubmit={getThisBoard} 
+                />
+              </Col>
+            ))}
+          </Row>
+        </DragDropContext>
+      );
+    }
   };
 
   return <div>{renderPage()}</div>;
