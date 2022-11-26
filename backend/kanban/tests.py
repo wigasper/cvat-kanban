@@ -134,7 +134,7 @@ class KanbanCardModelTest(TestCase):
 
         existing_positions = []
         
-        relevant_cards = KanbanCard.objects.filter(column__id=col_0.id)
+        relevant_cards = models.KanbanCard.objects.filter(column__id=col_0.id)
 
         for card in relevant_cards.all():
             existing_positions.append(card.position)
