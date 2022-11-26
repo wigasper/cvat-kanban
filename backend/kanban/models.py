@@ -72,7 +72,7 @@ class KanbanCard(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.column.id is not None and self.position == -1:
+        if self.column and self.position == -1:
             relevant_cards = KanbanCard.objects.filter(column__id=self.column.id)
             
             position = 1
