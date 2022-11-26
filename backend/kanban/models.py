@@ -52,7 +52,7 @@ class KanbanCard(models.Model):
     )
 
     #position = models.PositiveIntegerField(default=get_default_position)
-    position = models.PositiveIntegerField(default=-1, null=True)
+    position = models.IntegerField(default=-1, null=True)
 
     user = models.ForeignKey(
         User, related_name="cards", on_delete=models.SET_NULL, null=True
