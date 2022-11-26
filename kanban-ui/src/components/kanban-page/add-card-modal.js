@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import "antd/dist/antd.css";
 
-import { Row, Button, Modal, Form, Input } from "antd";
+import { Button, Modal, Form, Input } from "antd";
 
 import { addCard } from "../../services/card";
 
@@ -66,16 +66,18 @@ function AddCardModalComponent({ columnID, onSubmit }) {
     setTimeout(() => {
       setModalOpen(false);
       setConfirmModalLoading(false);
+      onReset();
     }, 1000);
   };
 
   const handleCancel = () => {
+    onReset();
     setModalOpen(false);
   };
 
   return (
     <div>
-      <Button type="primary" onClick={showModal}>
+      <Button type="dashed" block onClick={showModal} style={{ marginTop: 16 }}>
         Add card
       </Button>
       {renderModal()}

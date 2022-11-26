@@ -8,7 +8,7 @@ import { patchCard } from "../../services/card";
 import { getBoard } from "../../services/board";
 import AddCardModalComponent from "./add-card-modal";
 
-import { Col, Row, Spin } from "antd";
+import { Col, Row } from "antd";
 
 import "antd/dist/antd.css";
 
@@ -16,23 +16,6 @@ function KanbanPageComponent() {
   const [columns, setColumns] = useState([]);
 
   const [loading, setLoading] = useState(true);
-
-  // yes this is repetitive but for some reason calling
-  // this function inside useEffect causes an annoying
-  // delay
-  //
-  // this is for the AddCardModalComponent, to get a rerender
-  // on adding a card. would be nice to just use setLoading but
-  // this doesn't work either ?
-  const getThisBoard = (loading_) => {
-    getBoard(1)
-      .then((res) => {
-        if (loading_) {
-          setColumns(res.columns);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
 
   useEffect(() => {
     getBoard(1)
@@ -62,7 +45,7 @@ function KanbanPageComponent() {
   const onDragEnd = (res) => {
     // some issue here in that the indices are not correct all the time
     // seems to be exacerbated when making a list empty
-    const { destination, source, draggableId } = res;
+    const { destination, source } = res;
 
     if (!destination) {
       return;
@@ -106,13 +89,9 @@ function KanbanPageComponent() {
   const renderPage = () => {
     return (
       <DragDropContext onDragEnd={onDragEnd}>
-        <Row gutter={1}>
+        <Row gutter={[8, 8]} style={{ margin: 8 }}>
           {columns.map((column) => (
-            <Col
-              key={column.id}
-              xs={{ span: 3, offset: 1 }}
-              lg={{ span: 4, offset: 2 }}
-            >
+            <Col key={column.id}>
               <KanbanColumnComponent column={column} />
               <AddCardModalComponent
                 columnID={column.id}
