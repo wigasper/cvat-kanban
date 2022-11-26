@@ -39,7 +39,7 @@
 		"fields": {
 			"name": "Make kanban board backend",
 			"column": 2,
-			"position": 0
+			"position": 1
 		}
 	},
 	{
@@ -48,7 +48,7 @@
 		"fields": {
 			"name": "Make kanban board frontend",
 			"column": 1,
-			"position": 0
+			"position": 1
 		}
 	},
 	{

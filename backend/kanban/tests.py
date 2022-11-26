@@ -117,18 +117,26 @@ class KanbanCardModelTest(TestCase):
         self.assertEqual(response.json()["position"], expected)
 
     def test_card_default_position_1(self):
+        col_0 = models.KanbanColumn()
+        col_0.name = "To Do"
+        col_0.position = 0
+        col_0.save()
+        
         card = models.KanbanCard()
         card.name = "make pizza"
-        card.position = 8
+        card.column = col_0
         card.save()
 
         card_1 = models.KanbanCard()
         card_1.name = "make more pizza"
+        card_1.column = col_0
         card_1.save()
 
         existing_positions = []
+        
+        relevant_cards = models.KanbanCard.objects.filter(column__id=col_0.id)
 
-        for card in models.KanbanCard.objects.all():
+        for card in relevant_cards.all():
             existing_positions.append(card.position)
 
         expected = sorted(existing_positions)[-1]

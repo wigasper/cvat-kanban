@@ -37,28 +37,32 @@ class KanbanColumn(models.Model):
 
 
 class KanbanCard(models.Model):
-    def get_default_position() -> int:
-        out = 0
-
-        if KanbanCard.objects.count() > 0:
-            out = max([it.position for it in KanbanCard.objects.all()]) + 1
-
-        return out
-
     name = models.CharField("Card name", max_length=120)
 
     column = models.ForeignKey(
         KanbanColumn, related_name="cards", on_delete=models.SET_NULL, null=True
     )
 
-    position = models.PositiveIntegerField(default=get_default_position)
+    position = models.IntegerField(default=-1, null=True)
 
     user = models.ForeignKey(
         User, related_name="cards", on_delete=models.SET_NULL, null=True
     )
-
+   
     class Meta:
         ordering = ["position"]
 
     def __str__(self) -> str:
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.column and self.position == -1:
+            relevant_cards = KanbanCard.objects.filter(column__id=self.column.id)
+            
+            position = 1
+
+            if relevant_cards.count() > 0:
+                position = max([it.position for it in relevant_cards.all()]) + 1
+
+            self.position = position
+        super(KanbanCard, self).save(*args, **kwargs)

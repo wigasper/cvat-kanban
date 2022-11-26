@@ -4,16 +4,17 @@ import { DragDropContext } from "react-beautiful-dnd";
 
 import KanbanColumnComponent from "./kanban-column";
 
-import { getColumns } from "../../services/column";
 import { patchCard } from "../../services/card";
 import { getBoard } from "../../services/board";
+import AddCardModalComponent from "./add-card-modal";
 
 import { Col, Row } from "antd";
 
 import "antd/dist/antd.css";
 
 function KanbanPageComponent() {
-  const [columns, setColumns] = useState([{ name: "a", cards: [], id: 0 }]);
+  const [columns, setColumns] = useState([]);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,12 +25,27 @@ function KanbanPageComponent() {
         }
       })
       .catch((err) => console.log(err));
-
     return () => setLoading(false);
-  }, [columns]);
+  }, [columns, loading]);
+
+  const updateBackend = (column) => {
+    column.cards.forEach((card, index) => {
+      const cardUpdate = {};
+
+      if (card.position !== index) {
+        cardUpdate.position = index;
+      } else if (card.column !== column.id) {
+        cardUpdate.column = column.id;
+      }
+
+      patchCard(card.id, cardUpdate);
+    });
+  };
 
   const onDragEnd = (res) => {
-    const { destination, source, draggableId } = res;
+    // some issue here in that the indices are not correct all the time
+    // seems to be exacerbated when making a list empty
+    const { destination, source } = res;
 
     if (!destination) {
       return;
@@ -42,27 +58,30 @@ function KanbanPageComponent() {
       return;
     }
 
-    const thisColumn = columns.filter(function (col) {
+    const sourceColumn = columns.filter(function (col) {
       return col.name === source.droppableId;
     })[0];
+    const sourceColumnIndex = columns.indexOf(sourceColumn);
 
-    const thisColumnIndex = columns.indexOf(thisColumn);
+    const destColumn = columns.filter(function (col) {
+      return col.name === destination.droppableId;
+    })[0];
+    const destColumnIndex = columns.indexOf(destColumn);
 
-    /// revised
     const newColumns = [...columns];
 
-    const thisCard = { ...newColumns[thisColumnIndex].cards[source.index] };
-    newColumns[thisColumnIndex].cards.splice(source.index, 1);
-    newColumns[thisColumnIndex].cards.splice(destination.index, 0, thisCard);
+    const thisCard = newColumns[sourceColumnIndex].cards.splice(
+      source.index,
+      1
+    )[0];
 
-    newColumns[thisColumnIndex].cards.forEach((card, index) => {
-      if (card.position !== index) {
-        patchCard(card.id, { position: index });
-        const newCard = { ...newColumns[thisColumnIndex].cards[index] };
-        newCard.position = index;
-        newColumns[thisColumnIndex].cards[index] = newCard;
-      }
-    });
+    newColumns[destColumnIndex].cards.splice(destination.index, 0, thisCard);
+
+    updateBackend(newColumns[sourceColumnIndex]);
+
+    if (destColumnIndex !== sourceColumnIndex) {
+      updateBackend(newColumns[destColumnIndex]);
+    }
 
     setColumns(newColumns);
   };
@@ -70,14 +89,14 @@ function KanbanPageComponent() {
   const renderPage = () => {
     return (
       <DragDropContext onDragEnd={onDragEnd}>
-        <Row gutter={16}>
+        <Row gutter={[8, 8]} style={{ margin: 8 }}>
           {columns.map((column) => (
-            <Col
-              key={column.id}
-              xs={{ span: 5, offset: 1 }}
-              lg={{ span: 6, offset: 2 }}
-            >
+            <Col key={column.id}>
               <KanbanColumnComponent column={column} />
+              <AddCardModalComponent
+                columnID={column.id}
+                onSubmit={setLoading}
+              />
             </Col>
           ))}
         </Row>
