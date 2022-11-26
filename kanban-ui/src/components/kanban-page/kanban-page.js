@@ -13,9 +13,6 @@ import { Col, Row, Spin } from "antd";
 import "antd/dist/antd.css";
 
 function KanbanPageComponent() {
-  //const [columns, setColumns] = useState([
-  //  { name: "initstate", cards: [], id: 0 },
-  //]);
   const [columns, setColumns] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -38,7 +35,6 @@ function KanbanPageComponent() {
   };
 
   useEffect(() => {
-    //getThisBoard(loading);
     getBoard(1)
       .then((res) => {
         if (loading) {
@@ -47,10 +43,9 @@ function KanbanPageComponent() {
       })
       .catch((err) => console.log(err));
     return () => setLoading(false);
-  }, [columns]);
+  }, [columns, loading]);
 
   const updateBackend = (column) => {
-    debugger
     column.cards.forEach((card, index) => {
       const cardUpdate = {};
 
@@ -84,49 +79,20 @@ function KanbanPageComponent() {
       return col.name === source.droppableId;
     })[0];
     const sourceColumnIndex = columns.indexOf(sourceColumn);
-    //const sourceClone = { ...sourceColumn };
 
     const destColumn = columns.filter(function (col) {
       return col.name === destination.droppableId;
     })[0];
     const destColumnIndex = columns.indexOf(destColumn);
-    //const destClone = { ...destColumn };
 
     const newColumns = [...columns];
 
-    const thisCard = { ...newColumns[sourceColumnIndex].cards[source.index] };
-    debugger
-    //const thisCard = { ...sourceClone.cards[source.index] };
+    const thisCard = newColumns[sourceColumnIndex].cards.splice(
+      source.index,
+      1
+    )[0];
 
-    newColumns[sourceColumnIndex].cards.splice(source.index, 1);
-    //sourceClone.cards.splice(source.index, 1);
     newColumns[destColumnIndex].cards.splice(destination.index, 0, thisCard);
-    //destClone.cards.splice(destination.index, 0, thisCard);
-   // debugger
-
-    //newColumns[sourceColumnIndex] = sourceClone;
-    //newColumns[destColumnIndex] = destClone;
-    /*
-    newColumns[sourceColumnIndex].cards.forEach((card, index) => {
-      if (card.position !== index) {
-        patchCard(card.id, { position: index });
-        const newCard = { ...newColumns[sourceColumnIndex].cards[index] };
-        newCard.position = index;
-        newColumns[sourceColumnIndex].cards[index] = newCard;
-      }
-    });
-    
-    if (destColumnIndex !== sourceColumnIndex) {
-      newColumns[destColumnIndex].cards.forEach((card, index) => {
-        if (card.position !== index || card.column != newColumns[destColumnIndex].id) {
-          patchCard(card.id, { position: index, 
-            column: newColumns[destColumnIndex].id });
-          const newCard = { ...newColumns[destColumnIndex].cards[index] };
-          newCard.position = index;
-          newColumns[destColumnIndex].cards[index] = newCard;
-        }
-      });
-    }*/
 
     updateBackend(newColumns[sourceColumnIndex]);
 
@@ -135,38 +101,6 @@ function KanbanPageComponent() {
     }
 
     setColumns(newColumns);
-  };
-
-  const renderPageBAD = () => {
-    if (columns[0].name === "initstate") {
-      return (
-        <div>
-          <center>
-            <Spin style={{ padding: 40 }} size="large" />
-          </center>
-        </div>
-      );
-    } else {
-      return (
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Row gutter={1}>
-            {columns.map((column) => (
-              <Col
-                key={column.id}
-                xs={{ span: 3, offset: 1 }}
-                lg={{ span: 4, offset: 2 }}
-              >
-                <KanbanColumnComponent column={column} />
-                <AddCardModalComponent
-                  columnID={column.id}
-                  onSubmit={getThisBoard}
-                />
-              </Col>
-            ))}
-          </Row>
-        </DragDropContext>
-      );
-    }
   };
 
   const renderPage = () => {
@@ -182,7 +116,7 @@ function KanbanPageComponent() {
               <KanbanColumnComponent column={column} />
               <AddCardModalComponent
                 columnID={column.id}
-                onSubmit={getThisBoard}
+                onSubmit={setLoading}
               />
             </Col>
           ))}

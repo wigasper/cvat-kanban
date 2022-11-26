@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-
-import { getColumn } from "../../services/column";
+import React from "react";
 
 import { Droppable } from "react-beautiful-dnd";
 
@@ -9,10 +7,6 @@ import "antd/dist/antd.css";
 import { Card } from "antd";
 
 import KanbanCardComponent from "./kanban-card";
-
-import AddCardModalComponent from "./add-card-modal";
-
-import { Row, Button, Modal, Form, Input } from "antd";
 
 // TODO fix modal situation
 // TODO there can be errors for screwed up initial indices, probably
@@ -40,6 +34,7 @@ function KanbanColumnComponent({ column }) {
     return () => (setLoading(false));
   }, [column]);
 */
+
   const renderColumn = () => {
     return (
       <>
@@ -64,5 +59,4 @@ function KanbanColumnComponent({ column }) {
   //
   return <div>{renderColumn()}</div>;
 }
-
 export default KanbanColumnComponent;
