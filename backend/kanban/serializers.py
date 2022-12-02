@@ -12,13 +12,18 @@ class ThumbnailImageSerializer(serializers.ModelSerializer):
 
         fields = ["image"]
 
+class UsernameOnlyUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "username"]
+
 
 class KanbanCardSerializer(serializers.ModelSerializer):
     column = serializers.PrimaryKeyRelatedField(
         many=False, queryset=models.KanbanColumn.objects.all()
     )
-
-    user = serializers.PrimaryKeyRelatedField(many=False, queryset=User.objects.all())
+ 
+    user = UsernameOnlyUserSerializer(read_only=True)
 
     thumbnail = ThumbnailImageSerializer()
 
