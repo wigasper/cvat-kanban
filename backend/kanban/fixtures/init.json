@@ -1,5 +1,12 @@
 [
 	{
+		"model": "kanban.thumbnailimage",
+		"pk": 1,
+		"fields": {
+			"image": "testing_thumbnail.jpg"
+		}
+	},
+	{
 		"model": "kanban.kanbanboard",
 		"pk": 1,
 		"fields": {
@@ -39,7 +46,9 @@
 		"fields": {
 			"name": "Make kanban board backend",
 			"column": 2,
-			"position": 1
+			"position": 1,
+			"difficulty": 4,
+			"image": 1
 		}
 	},
 	{
@@ -48,7 +57,9 @@
 		"fields": {
 			"name": "Make kanban board frontend",
 			"column": 1,
-			"position": 1
+			"position": 1,
+			"difficulty": 5,
+			"image": 1
 		}
 	},
 	{
@@ -57,7 +68,9 @@
 		"fields": {
 			"name": "make dinner",
 			"column": 2,
-			"position": 2
+			"position": 2,
+			"difficulty": 1,
+			"image": 1
 		}
 	},
 	{
