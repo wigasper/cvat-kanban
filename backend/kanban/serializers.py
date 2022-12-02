@@ -20,14 +20,14 @@ class KanbanCardSerializer(serializers.ModelSerializer):
 
     user = serializers.PrimaryKeyRelatedField(many=False, queryset=User.objects.all())
 
-    image = ThumbnailImageSerializer()
+    thumbnail = ThumbnailImageSerializer()
 
     class Meta:
         model = models.KanbanCard
         fields = [
             "id",
             "name",
-            "image",
+            "thumbnail",
             "difficulty",
             "num_structures",
             "column",
