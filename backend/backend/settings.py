@@ -75,6 +75,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "backend.wsgi.application"
 
+# TODO there should probably be some logic here to deal with
+# fixtures and dev environment things
+
+MEDIA_ROOT = os.path.join(str(Path(BASE_DIR).parent), "data/media")
+os.makedirs(MEDIA_ROOT, exist_ok=True)
+
+MEDIA_URL = "/media/"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

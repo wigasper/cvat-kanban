@@ -36,6 +36,10 @@ class KanbanColumn(models.Model):
         return self.name
 
 
+class ThumbnailImage(models.Model):
+    image = models.ImageField(upload_to="images")
+
+
 class KanbanCard(models.Model):
     name = models.CharField("Card name", max_length=120)
 
@@ -48,7 +52,13 @@ class KanbanCard(models.Model):
     user = models.ForeignKey(
         User, related_name="cards", on_delete=models.SET_NULL, null=True
     )
-   
+
+    difficulty = models.PositiveSmallIntegerField(default=0)
+
+    num_structures = models.PositiveIntegerField(default=0)
+
+    thumbnail = models.ForeignKey(ThumbnailImage, on_delete=models.SET_NULL, null=True)
+
     class Meta:
         ordering = ["position"]
 
@@ -58,7 +68,7 @@ class KanbanCard(models.Model):
     def save(self, *args, **kwargs):
         if self.column and self.position == -1:
             relevant_cards = KanbanCard.objects.filter(column__id=self.column.id)
-            
+
             position = 1
 
             if relevant_cards.count() > 0:

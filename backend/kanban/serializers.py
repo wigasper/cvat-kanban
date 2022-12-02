@@ -44,3 +44,12 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "username", "cards"]
+
+
+class ThumbnailImageSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(max_length=None, use_url=True)
+
+    class Meta:
+        model = models.ThumbnailImage
+
+        fields = ["image"]
