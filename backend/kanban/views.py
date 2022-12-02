@@ -35,7 +35,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.UserSerializer
 
 
-class ThumbnailImageViewset(viewsets.ModelViewSet):
+class ThumbnailImageViewSet(viewsets.ModelViewSet):
     queryset = models.ThumbnailImage.objects.all()
     serializer_class = serializers.ThumbnailImageSerializer
     # FIXME temp for dev
