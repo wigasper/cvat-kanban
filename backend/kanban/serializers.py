@@ -4,6 +4,15 @@ from django.contrib.auth.models import User
 from kanban import models
 
 
+class ThumbnailImageSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(max_length=None, use_url=True)
+
+    class Meta:
+        model = models.ThumbnailImage
+
+        fields = ["image"]
+
+
 class KanbanCardSerializer(serializers.ModelSerializer):
     column = serializers.PrimaryKeyRelatedField(
         many=False, queryset=models.KanbanColumn.objects.all()
@@ -11,9 +20,20 @@ class KanbanCardSerializer(serializers.ModelSerializer):
 
     user = serializers.PrimaryKeyRelatedField(many=False, queryset=User.objects.all())
 
+    image = ImageSerializer()
+
     class Meta:
         model = models.KanbanCard
-        fields = ["id", "name", "column", "position", "user"]
+        fields = [
+            "id",
+            "name",
+            "image",
+            "difficulty",
+            "num_structures",
+            "column",
+            "position",
+            "user",
+        ]
 
 
 class KanbanColumnSerializer(serializers.ModelSerializer):
@@ -44,12 +64,3 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "username", "cards"]
-
-
-class ThumbnailImageSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField(max_length=None, use_url=True)
-
-    class Meta:
-        model = models.ThumbnailImage
-
-        fields = ["image"]
