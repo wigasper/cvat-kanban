@@ -33,7 +33,7 @@ function KanbanCardComponent({ card, index }) {
           width={dim}
           height={dim}
           alt={card.name}
-          src={card.thumbnail.image}
+          src={card.thumbnail}
         />;
     }
 
@@ -129,6 +129,7 @@ function KanbanCardComponent({ card, index }) {
         {(provided) => (
           <Card
             className="kanban-card"
+            title={card.name}
             hoverable
             size="small"
             bordered={true}
@@ -142,8 +143,22 @@ function KanbanCardComponent({ card, index }) {
                 {getThumbnail(64)}
               </Col>
               <Col className="gutter-row">
-                <p>Number structures: {card.num_structures}</p>
-                <p>Difficulty: {getDifficulty()}</p>
+                <Descriptions
+                  bordered
+                  size="small"
+                  layout="vertical"
+                >
+                  <Descriptions.Item 
+                    className="descriptions-item"
+                    label="Number structures">
+                    {card.num_structures}
+                  </Descriptions.Item>
+                  <Descriptions.Item className="descriptions-item" label="Difficulty">
+                    {getDifficulty()}
+                  </Descriptions.Item>
+
+
+                </Descriptions>
               </Col>
             </Row>
           </Card>
