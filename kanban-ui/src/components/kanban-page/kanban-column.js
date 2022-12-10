@@ -18,7 +18,7 @@ function KanbanColumnComponent({ column }) {
             <Card
               className="kanban-column"
               title={column.name}
-              style={{ width: 300, marginTop: 16 }}
+              style={{ width: 370 }}
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
