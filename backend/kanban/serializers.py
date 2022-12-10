@@ -40,27 +40,8 @@ class KanbanCardSerializer(serializers.ModelSerializer):
             "user",
         ]
 
-'''
-    def create(self, validated_data):
-        thumbnail_data = validated_data.pop("thumbnail")
-        
-        this_thumbnail = models.ThumbnailImage.objects.create(**thumbnail_data)
-
-        kanban_card = models.KanbanCard.objects.create(**validated_data)
-        kanban_card.thumbnail = this_thumbnail
-
-        return kanban_card
-
-    def update(self, instance, validated_data):
-        thumbnail_data = validated_data.pop("thumbnail")
-'''
-
 class KanbanColumnSerializer(serializers.ModelSerializer):
     cards = KanbanCardSerializer(read_only=True, many=True)
-
-    # board = serializers.PrimaryKeyRelatedField(
-    #    many=False, queryset=models.KanbanBoard.objects.all()
-    # )
 
     class Meta:
         model = models.KanbanColumn
