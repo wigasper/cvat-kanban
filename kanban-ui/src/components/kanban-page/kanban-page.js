@@ -31,20 +31,23 @@ function KanbanPageComponent() {
   const updateBackend = (column) => {
     column.cards.forEach((card, index) => {
       const cardUpdate = {};
-
+      
       if (card.position !== index) {
         cardUpdate.position = index;
-      } else if (card.column !== column.id) {
-        cardUpdate.column = column.id;
       }
 
-      patchCard(card.id, cardUpdate);
+      if (card.column !== column.id) {
+        cardUpdate.column = column.id;
+      }
+      
+      if (JSON.stringify(cardUpdate) !== '{}') {
+        patchCard(card.id, cardUpdate);
+      }
+
     });
   };
 
   const onDragEnd = (res) => {
-    // some issue here in that the indices are not correct all the time
-    // seems to be exacerbated when making a list empty
     const { destination, source } = res;
 
     if (!destination) {
@@ -82,7 +85,7 @@ function KanbanPageComponent() {
     if (destColumnIndex !== sourceColumnIndex) {
       updateBackend(newColumns[destColumnIndex]);
     }
-
+    
     setColumns(newColumns);
   };
 
