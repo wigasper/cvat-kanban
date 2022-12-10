@@ -31,7 +31,7 @@ function KanbanPageComponent() {
   const updateBackend = (column) => {
     column.cards.forEach((card, index) => {
       const cardUpdate = {};
-      
+
       if (card.position !== index) {
         cardUpdate.position = index;
       }
@@ -39,11 +39,10 @@ function KanbanPageComponent() {
       if (card.column !== column.id) {
         cardUpdate.column = column.id;
       }
-      
-      if (JSON.stringify(cardUpdate) !== '{}') {
+
+      if (JSON.stringify(cardUpdate) !== "{}") {
         patchCard(card.id, cardUpdate);
       }
-
     });
   };
 
@@ -85,7 +84,7 @@ function KanbanPageComponent() {
     if (destColumnIndex !== sourceColumnIndex) {
       updateBackend(newColumns[destColumnIndex]);
     }
-    
+
     setColumns(newColumns);
   };
 
@@ -95,7 +94,10 @@ function KanbanPageComponent() {
         <Row gutter={[8, 8]} style={{ margin: 8 }}>
           {columns.map((column) => (
             <Col key={column.id}>
-              <KanbanColumnComponent column={column} />
+              <KanbanColumnComponent
+                column={column}
+                onCardDelete={setLoading}
+              />
               <AddCardModalComponent
                 columnID={column.id}
                 onSubmit={setLoading}

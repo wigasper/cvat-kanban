@@ -7,21 +7,19 @@ import "./kanban-card.css";
 
 import { Button, Modal, Form, Input } from "antd";
 
-import { patchCard, getCard } from "../../services/card";
+import { deleteCard, patchCard, getCard } from "../../services/card";
 
 // import { EditOutlined, EllipsisOutlined } from '@ant-design/icons';
 
-import { Card, Col, Row, Descriptions } from "antd";
+import { Card, Col, Row, Descriptions, Popconfirm } from "antd";
 
-function KanbanCardComponent({ card, index }) {
+function KanbanCardComponent({ card, index, onDelete }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmModalLoading, setConfirmModalLoading] = useState(false);
 
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {
-    
-  };
+  const onFinish = (values) => {};
 
   const onReset = () => {
     form.resetFields();
@@ -29,24 +27,20 @@ function KanbanCardComponent({ card, index }) {
 
   const getThumbnail = (dim) => {
     if (card.thumbnail !== null) {
-      return <img 
-          width={dim}
-          height={dim}
-          alt={card.name}
-          src={card.thumbnail}
-        />;
+      return (
+        <img width={dim} height={dim} alt={card.name} src={card.thumbnail} />
+      );
     }
 
     return "";
-  }
-  
+  };
+
   const getUser = () => {
     if (card.user === null) {
       return "None";
     } else {
       return card.user.username;
     }
-    console.log(card);
     /*const thisUser = getCard(card.id).then((res) => {return res.user});
     console.log(thisUser); 
     if (thisUser !== null) {
@@ -54,10 +48,25 @@ function KanbanCardComponent({ card, index }) {
     } else {
       return "None";
     }*/
-  }
+  };
 
   const showModal = () => {
     setModalOpen(true);
+  };
+
+  const closeCard = () => {
+    setConfirmModalLoading(true);
+    setTimeout(() => {
+      setModalOpen(false);
+      setConfirmModalLoading(false);
+      onReset();
+    }, 100);
+  };
+
+  const deleteThisCard = () => {
+    deleteCard(card.id);
+    onDelete(true);
+    closeCard();
   };
 
   const getModal = () => {
@@ -69,36 +78,34 @@ function KanbanCardComponent({ card, index }) {
         confirmLoading={confirmModalLoading}
         onCancel={handleCancel}
       >
-      <Row>
-        <Col>
-          {getThumbnail(128)}
-        </Col>
-        <Col>
-          <Descriptions bordered column={1} size="small">
-            <Descriptions.Item label="Number structures">
-              {card.num_structures}
-            </Descriptions.Item>
-            <Descriptions.Item label="Difficulty">
-              {getDifficulty()}
-            </Descriptions.Item>
-            <Descriptions.Item label="User">
-              {getUser()}
-            </Descriptions.Item>
-          </Descriptions>
-        </Col>
-      </Row>
+        <Row gutter={[16, 32]}>
+          <Col className="gutter-row">{getThumbnail(128)}</Col>
+          <Col>
+            <Descriptions bordered column={1} size="small">
+              <Descriptions.Item label="Number structures">
+                {card.num_structures}
+              </Descriptions.Item>
+              <Descriptions.Item label="Difficulty">
+                {getDifficulty()}
+              </Descriptions.Item>
+              <Descriptions.Item label="User">{getUser()}</Descriptions.Item>
+            </Descriptions>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Popconfirm title="Are you sure?" onConfirm={deleteThisCard}>
+              <Button danger>Delete</Button>
+            </Popconfirm>
+          </Col>
+        </Row>
       </Modal>
     );
   };
 
   const handleAddCard = () => {
     form.submit();
-    setConfirmModalLoading(true);
-    setTimeout(() => {
-      setModalOpen(false);
-      setConfirmModalLoading(false);
-      onReset();
-    }, 1000);
+    closeCard();
   };
 
   const handleCancel = () => {
@@ -106,22 +113,20 @@ function KanbanCardComponent({ card, index }) {
     setModalOpen(false);
   };
 
-
-
   const getDifficulty = () => {
-    const colorMap = {0: "black",
-                      1: "green",
-                      2: "green",
-                      3: "yellow",
-                      4: "orange",
-                      5: "red"}
+    const colorMap = {
+      0: "black",
+      1: "green",
+      2: "green",
+      3: "yellow",
+      4: "orange",
+      5: "red",
+    };
 
-    const bars = Array.from({length: card.difficulty}, () => "▋").join("");
+    const bars = Array.from({ length: card.difficulty }, () => "▋").join("");
 
-    return <span style={{color: colorMap[card.difficulty]}}>{bars}</span>;
-  }
-
-
+    return <span style={{ color: colorMap[card.difficulty] }}>{bars}</span>;
+  };
 
   const renderCard = () => {
     return (
@@ -138,26 +143,22 @@ function KanbanCardComponent({ card, index }) {
             {...provided.dragHandleProps}
             ref={provided.innerRef}
           >
-            <Row>
+            <Row gutter={8}>
+              <Col className="gutter-row">{getThumbnail(64)}</Col>
               <Col className="gutter-row">
-                {getThumbnail(64)}
-              </Col>
-              <Col className="gutter-row">
-                <Descriptions
-                  bordered
-                  size="small"
-                  layout="vertical"
-                >
-                  <Descriptions.Item 
+                <Descriptions bordered size="small" layout="vertical">
+                  <Descriptions.Item
                     className="descriptions-item"
-                    label="Number structures">
+                    label="Number structures"
+                  >
                     {card.num_structures}
                   </Descriptions.Item>
-                  <Descriptions.Item className="descriptions-item" label="Difficulty">
+                  <Descriptions.Item
+                    className="descriptions-item"
+                    label="Difficulty"
+                  >
                     {getDifficulty()}
                   </Descriptions.Item>
-
-
                 </Descriptions>
               </Col>
             </Row>
@@ -167,7 +168,12 @@ function KanbanCardComponent({ card, index }) {
     );
   };
 
-  return <div>{renderCard()}{getModal()}</div>;
+  return (
+    <div>
+      {renderCard()}
+      {getModal()}
+    </div>
+  );
 }
 
 export default KanbanCardComponent;

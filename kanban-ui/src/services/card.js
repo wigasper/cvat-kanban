@@ -8,12 +8,19 @@ export function addCard(card) {
 }
 
 export function addCardMultipart(cardFormData) {
-   return fetch(`http://localhost:8000/kanban/cards/`, {
+  return fetch(`http://localhost:8000/kanban/cards/`, {
     method: "POST",
     mode: "cors",
     body: cardFormData,
-  })
-};
+  });
+}
+
+export function deleteCard(id) {
+  return fetch(`http://localhost:8000/kanban/cards/${id}`, {
+    method: "DELETE",
+    mode: "cors",
+  });
+}
 
 export function getCard(id) {
   return fetch(`http://localhost:8000/kanban/cards/${id}`).then((res) =>
