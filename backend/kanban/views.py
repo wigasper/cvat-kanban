@@ -33,3 +33,10 @@ class KanbanCardViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
+
+
+class ThumbnailImageViewSet(viewsets.ModelViewSet):
+    queryset = models.ThumbnailImage.objects.all()
+    serializer_class = serializers.ThumbnailImageSerializer
+    # FIXME temp for dev
+    permission_classes = [permissions.AllowAny]

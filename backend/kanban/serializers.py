@@ -4,24 +4,44 @@ from django.contrib.auth.models import User
 from kanban import models
 
 
+class ThumbnailImageSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(max_length=None, use_url=True)
+
+    class Meta:
+        model = models.ThumbnailImage
+
+        fields = ["id", "image"]
+
+class UsernameOnlyUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "username"]
+
+
 class KanbanCardSerializer(serializers.ModelSerializer):
     column = serializers.PrimaryKeyRelatedField(
         many=False, queryset=models.KanbanColumn.objects.all()
     )
+ 
+    user = UsernameOnlyUserSerializer(read_only=True)
 
-    user = serializers.PrimaryKeyRelatedField(many=False, queryset=User.objects.all())
+#    thumbnail = ThumbnailImageSerializer()
 
     class Meta:
         model = models.KanbanCard
-        fields = ["id", "name", "column", "position", "user"]
-
+        fields = [
+            "id",
+            "name",
+            "thumbnail",
+            "difficulty",
+            "num_structures",
+            "column",
+            "position",
+            "user",
+        ]
 
 class KanbanColumnSerializer(serializers.ModelSerializer):
     cards = KanbanCardSerializer(read_only=True, many=True)
-
-    # board = serializers.PrimaryKeyRelatedField(
-    #    many=False, queryset=models.KanbanBoard.objects.all()
-    # )
 
     class Meta:
         model = models.KanbanColumn

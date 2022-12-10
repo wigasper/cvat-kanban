@@ -9,7 +9,7 @@ import { Card } from "antd";
 
 import KanbanCardComponent from "./kanban-card";
 
-function KanbanColumnComponent({ column }) {
+function KanbanColumnComponent({ column, onCardDelete }) {
   const renderColumn = () => {
     return (
       <>
@@ -18,12 +18,16 @@ function KanbanColumnComponent({ column }) {
             <Card
               className="kanban-column"
               title={column.name}
-              style={{ width: 300, marginTop: 16 }}
+              style={{ width: 380 }}
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
               {column.cards.map((card, index) => (
-                <KanbanCardComponent card={card} index={index} />
+                <KanbanCardComponent
+                  card={card}
+                  index={index}
+                  onDelete={onCardDelete}
+                />
               ))}
               {provided.placeholder}
             </Card>

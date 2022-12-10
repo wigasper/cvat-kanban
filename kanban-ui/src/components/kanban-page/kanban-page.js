@@ -34,17 +34,19 @@ function KanbanPageComponent() {
 
       if (card.position !== index) {
         cardUpdate.position = index;
-      } else if (card.column !== column.id) {
+      }
+
+      if (card.column !== column.id) {
         cardUpdate.column = column.id;
       }
 
-      patchCard(card.id, cardUpdate);
+      if (JSON.stringify(cardUpdate) !== "{}") {
+        patchCard(card.id, cardUpdate);
+      }
     });
   };
 
   const onDragEnd = (res) => {
-    // some issue here in that the indices are not correct all the time
-    // seems to be exacerbated when making a list empty
     const { destination, source } = res;
 
     if (!destination) {
@@ -92,7 +94,10 @@ function KanbanPageComponent() {
         <Row gutter={[8, 8]} style={{ margin: 8 }}>
           {columns.map((column) => (
             <Col key={column.id}>
-              <KanbanColumnComponent column={column} />
+              <KanbanColumnComponent
+                column={column}
+                onCardDelete={setLoading}
+              />
               <AddCardModalComponent
                 columnID={column.id}
                 onSubmit={setLoading}

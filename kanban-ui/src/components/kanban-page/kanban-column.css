@@ -1,4 +1,6 @@
 .kanban-column {
   margin-top: 16px;
   border-radius: 8px;
+  background-color: #f4f4f4;
+  font-weight: bold;
 }
