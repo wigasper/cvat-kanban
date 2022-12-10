@@ -12,23 +12,11 @@ function AddCardModalComponent({ columnID, onSubmit }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmModalLoading, setConfirmModalLoading] = useState(false);
   const [modalText, setModalText] = useState("tester");
-  const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailIm, setThumbnailIm] = useState(null);
 
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    /*
-    values["user"] = 1;
-    values["column"] = columnID;
-    values["board"] = 1;
-    values["thumbnail"] = thumbnailIm;
-    
-    debugger
-
-    addCard(values);
-    */
-
     let data = new FormData();
     data.append("user", 1);
     data.append("column", columnID);
@@ -56,32 +44,19 @@ function AddCardModalComponent({ columnID, onSubmit }) {
 
     data.append("image", file);
     
-    //try {addThumbnail(data).then((res) => {
-      //setThumbnail(res);
     try {
       setThumbnailIm(file);
-      debugger
       onSuccess("Ok");
     } catch (err) {
       const error = new Error("Could not upload");
       onError({ err });
     }
 
-    /*
-    debugger
-
-    return fetch(`http://localhost:8000/kanban/thumbnails/`, {
-      method: "POST",
-      mode: "cors", 
-      body: data
-    })*/
   };
 
   const uploadProps = {
     name: "file",
     customRequest: addImage
-    //action: "http://localhost:8000/kanban/thumbnails/",
-    //crossOrigin: "anonymous"
   };
 
   const renderModal = () => {
