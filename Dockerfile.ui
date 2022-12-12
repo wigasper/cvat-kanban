@@ -3,7 +3,7 @@ FROM node:lts-slim
 
 WORKDIR /src/frontend
 
-COPY /package.json kanban-ui/package-lock.json ./
+COPY kanban-ui/package.json kanban-ui/package-lock.json ./
 RUN npm install
 
 COPY kanban-ui .
