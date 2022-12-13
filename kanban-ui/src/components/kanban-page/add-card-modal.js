@@ -6,7 +6,6 @@ import { Button, Modal, Form, Input, Upload, Slider } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
 import { addCard, addCardMultipart } from "../../services/card";
-import { addThumbnail } from "../../services/thumbnail";
 
 function AddCardModalComponent({ columnID, onSubmit }) {
   const [modalOpen, setModalOpen] = useState(false);
