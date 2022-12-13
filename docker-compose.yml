@@ -15,8 +15,8 @@ services:
     command: bash /src/backend/entrypoint.sh
     volumes:
       - .:/src
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     depends_on:
       - db
     environment:
@@ -26,17 +26,26 @@ services:
   ui:
     container_name: kanban_ui
     restart: always
-    command: npm start
     depends_on:
       - web
     build:
       context: .
       dockerfile: Dockerfile.ui
-    ports:
-       - "3000:3000"
+    volumes:
+      - ./kanban-ui:/kanban-ui
       #networks:
       #- main
-
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - "80:8080"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/logs:/var/logs/nginx
+      - ./kanban-ui/build:/var/www/kanban-ui
+    depends_on:
+      - web
 volumes:
   db:
 

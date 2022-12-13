@@ -1,11 +1,13 @@
 # syntax=docker/dockerfile:1
 FROM node:lts-slim
 
-WORKDIR /src/frontend
+WORKDIR /src/kanban-ui
 
 COPY kanban-ui/package.json kanban-ui/package-lock.json ./
 RUN npm install
 
 COPY kanban-ui .
+
+RUN npm run build
 
 EXPOSE 3000
