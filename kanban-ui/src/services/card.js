@@ -1,5 +1,9 @@
+import { config } from "../constants";
+
+const BASE_URL = config.url;
+
 export function addCard(card) {
-  return fetch(`http://localhost:8000/kanban/cards/`, {
+  return fetch(`${BASE_URL}/kanban/cards/`, {
     method: "POST",
     mode: "cors",
     headers: { Accept: "application/json", "Content-Type": "application/json" },
@@ -8,7 +12,7 @@ export function addCard(card) {
 }
 
 export function addCardMultipart(cardFormData) {
-  return fetch(`http://localhost:8000/kanban/cards/`, {
+  return fetch(`${BASE_URL}/kanban/cards/`, {
     method: "POST",
     mode: "cors",
     body: cardFormData,
@@ -16,20 +20,20 @@ export function addCardMultipart(cardFormData) {
 }
 
 export function deleteCard(id) {
-  return fetch(`http://localhost:8000/kanban/cards/${id}`, {
+  return fetch(`${BASE_URL}/kanban/cards/${id}`, {
     method: "DELETE",
     mode: "cors",
   });
 }
 
 export function getCard(id) {
-  return fetch(`http://localhost:8000/kanban/cards/${id}`).then((res) =>
+  return fetch(`${BASE_URL}/kanban/cards/${id}`).then((res) =>
     res.json()
   );
 }
 
 export function patchCard(id, changes) {
-  return fetch(`http://localhost:8000/kanban/cards/${id}/`, {
+  return fetch(`${BASE_URL}/kanban/cards/${id}/`, {
     method: "PATCH",
     mode: "cors",
     headers: { Accept: "application/json", "Content-Type": "application/json" },
