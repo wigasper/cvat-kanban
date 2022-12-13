@@ -15,39 +15,33 @@ services:
     command: bash /src/backend/entrypoint.sh
     volumes:
       - .:/src
+      - static_volume:/src/backend/django_static
     expose:
       - "8000"
+    ports:
+      - "8000:8000"
     depends_on:
       - db
     environment:
       SECRET_KEY: $SECRET_KEY
         #networks:
         #- main
-  ui:
-    container_name: kanban_ui
-    restart: always
-    depends_on:
-      - web
+  nginx:
     build:
       context: .
       dockerfile: Dockerfile.ui
-    volumes:
-      - ./kanban-ui:/kanban-ui
-      #networks:
-      #- main
-  nginx:
-    image: nginx:latest
     restart: always
     ports:
       - "80:8080"
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/conf.d/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./nginx/logs:/var/logs/nginx
-      - ./kanban-ui/build:/var/www/kanban-ui
+      - static_volume:/src/backend/django_static
     depends_on:
       - web
 volumes:
   db:
+  static_volume: 
 
     #networks:
     #main:
