@@ -146,21 +146,3 @@ class KanbanCardModelTest(TestCase):
         self.assertEqual(response.json()["position"], expected)
 
 
-class UserSerializerTest(TestCase):
-    def test_user_serializer_0(self):
-        test_user = User.objects.create_user(username="testuser", password="23wesdxc")
-        test_user.save()
-
-        card = models.KanbanCard()
-        card.name = "make pizza"
-        card.position = 8
-        card.user = test_user
-        card.save()
-
-        card_1 = models.KanbanCard()
-        card_1.name = "make more pizza"
-        card_1.user = test_user
-        card_1.save()
-
-        response = self.client.get(f"/kanban/users/{test_user.pk}", follow=True)
-        self.assertEqual(response.status_code, 200)
