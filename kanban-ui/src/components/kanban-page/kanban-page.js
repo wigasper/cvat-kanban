@@ -12,7 +12,7 @@ import { Button, Col, Row } from "antd";
 
 import "antd/dist/antd.css";
 
-function KanbanPageComponent({ }) {
+function KanbanPageComponent({}) {
   const [columns, setColumns] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -22,7 +22,6 @@ function KanbanPageComponent({ }) {
       .then((res) => {
         if (loading) {
           setColumns(res.columns);
-          console.log(localStorage.getItem("token"));
         }
       })
       .catch((err) => console.log(err));
