@@ -12,6 +12,7 @@ class ThumbnailImageSerializer(serializers.ModelSerializer):
 
         fields = ["id", "image"]
 
+
 class UsernameOnlyUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -22,10 +23,10 @@ class KanbanCardSerializer(serializers.ModelSerializer):
     column = serializers.PrimaryKeyRelatedField(
         many=False, queryset=models.KanbanColumn.objects.all()
     )
- 
+
     user = UsernameOnlyUserSerializer(read_only=True)
 
-#    thumbnail = ThumbnailImageSerializer()
+    #    thumbnail = ThumbnailImageSerializer()
 
     class Meta:
         model = models.KanbanCard
@@ -39,6 +40,7 @@ class KanbanCardSerializer(serializers.ModelSerializer):
             "position",
             "user",
         ]
+
 
 class KanbanColumnSerializer(serializers.ModelSerializer):
     cards = KanbanCardSerializer(read_only=True, many=True)

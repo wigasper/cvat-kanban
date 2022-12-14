@@ -20,13 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY", None)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if SECRET_KEY is None:
+    raise ValueError("SECRET_KEY env variable needs to be set")
 
-ALLOWED_HOSTS = ['localhost', '0.0.0.0', '10.0.10.51']
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+
+ALLOWED_HOSTS = ["localhost", "0.0.0.0"]
 
 
 # Application definition
@@ -117,6 +119,9 @@ else:
         }
     }
 
+if SYSTEM_ENV == "development":
+    DEBUG = True
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -181,9 +186,7 @@ REST_FRAMEWORK = {
     },
 }
 
-DJOSER = {
-    "USER_ID_FIELD": "username"
-}
+DJOSER = {"USER_ID_FIELD": "username"}
 
 # for frontend api calls
 CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]

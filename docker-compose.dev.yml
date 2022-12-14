@@ -7,8 +7,6 @@ services:
       - db:/var/lib/postgresql/data/
     environment:
       - "POSTGRES_HOST_AUTH_METHOD=trust"
-        #networks:
-        #- main
   web:
     build: .
     image: app
@@ -25,14 +23,9 @@ services:
       - db
     environment:
       SECRET_KEY: $SECRET_KEY
-        #networks:
-        #- main
+      SYSTEM_ENV: development
 
 volumes:
   db:
   static_volume: 
   media:
-
-    #networks:
-    #main:
-    #driver: bridge
