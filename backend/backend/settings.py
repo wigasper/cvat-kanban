@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", None)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '0.0.0.0']
+ALLOWED_HOSTS = ['localhost', '0.0.0.0', '10.0.10.51']
 
 
 # Application definition
@@ -34,7 +34,10 @@ ALLOWED_HOSTS = ['localhost', '0.0.0.0']
 INSTALLED_APPS = [
     "corsheaders",
     "kanban.apps.KanbanConfig",
+    "accounts.apps.AccountsConfig",
     "rest_framework",
+    "rest_framework.authtoken",
+    "djoser",
     "django_extensions",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -159,8 +162,12 @@ STATIC_ROOT = BASE_DIR / "django_static"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+    ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly",
+        "rest_framework.permissions.IsAuthenticated",
     ],
     "DEFAULT_THROTTLE_CLASSES": (
         "rest_framework.throttling.AnonRateThrottle",
@@ -168,10 +175,14 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.ScopedRateThrottle",
     ),
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "180/minute",
+        "anon": "60/minute",
         "user": "180/minute",
         "/api/get-items": "180/minute",
     },
+}
+
+DJOSER = {
+    "USER_ID_FIELD": "username"
 }
 
 # for frontend api calls

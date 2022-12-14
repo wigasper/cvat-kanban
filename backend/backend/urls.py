@@ -22,6 +22,7 @@ urlpatterns = [
     path("kanban/", include("kanban.urls", namespace="kanban")),
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
+    path("accounts/", include("accounts.urls", namespace="accounts")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
