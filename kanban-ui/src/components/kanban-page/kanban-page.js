@@ -8,11 +8,11 @@ import { patchCard } from "../../services/card";
 import { getBoard } from "../../services/board";
 import AddCardModalComponent from "./add-card-modal";
 
-import { Button, Col, Row } from "antd";
+import { Col, Row } from "antd";
 
 import "antd/dist/antd.css";
 
-function KanbanPageComponent({}) {
+function KanbanPageComponent() {
   const [columns, setColumns] = useState([]);
 
   const [loading, setLoading] = useState(true);

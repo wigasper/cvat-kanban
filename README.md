@@ -11,53 +11,56 @@ not present in general purpose kanban board web apps.
 ## Deployment
 
 First, make sure to generate a secret key and store it in `.env`.
-For example, from the root project directory:
+For example, from the root project directory (if Django is installed):
 
 ```bash
 key=`python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`
 echo -e "SECRET_KEY = '$key'" >> .env
 ```
 
-Or, just generate a random string some other way.
+Or, just generate a random ASCII string some other way.
 
-## Installation
+Next, add the host to `backend/backend/settings.py`:
 
-Currently, only a development deployment is supported. This is
-not intended for use in a production environment.
+```
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "your.host.here"]
+```
+
+Then, build and bring up the containers:
 
 ```bash
-# clone the repo, set up .env
-git clone https://github.com/wigasper/cvat-kanban
-cd cvat-kanban
-echo 'SECRET_KEY="test_deployment_key"' > .env
+docker-compose up
+```
 
-# build and run
-docker-compose up --build web db
+This may take some time and building the front end may require
+more than 1GB of memory.
 
-# perform migrations
-docker-compose exec web python backend/manage.py migrate
+Next, feel free to create an admin user:
 
-# create a super user
+```bash
 docker-compose exec web python backend/manage.py createsuperuser
-
-# load fixtures data
-docker-compose exec web python backend/manage.py initdata
-
 ```
 
-## Getting started
+The app is then available at the host address.
 
-After the initial installation, the app can be deployed at
-any time:
+The app will be populated with some initial data just to 
+provide examples, but it is recommended to remove the
+`alice` user, as the password (`anchovies`) is readily 
+available.
 
-```bash
-docker-compose up web db
-```
+The admin panel is then available at `http://$HOST/admin/`.
 
-The Django REST framework API browser for the kanban API is then accessible at
-[http://localhost:8000/kanban/](http://localhost:8000/kanban/).
-For convenient testing, a sample user is provided with the username
-`alice` and the password `anchovies`.
+For the current scope and deployment of this project, account
+creation is not supported outside of the admin panel.
+
+## API endpoints
+
+There are several DRF browsable endpoints available at 
+`/kanban/cards/`, `/kanban/boards/`, `/kanban/columns/`.
+
+For authentication, tokens can be retrieved from 
+`/accounts/auth/token/login`, and the logout endpoint is
+`/accounts/auth/token/logout`.
 
 ## License
 

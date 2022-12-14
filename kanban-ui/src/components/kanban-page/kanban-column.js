@@ -18,7 +18,7 @@ function KanbanColumnComponent({ column, onCardDelete }) {
             <Card
               className="kanban-column"
               title={column.name}
-              style={{ width: 380 }}
+              style={{ width: 390 }}
               ref={provided.innerRef}
               {...provided.droppableProps}
             >

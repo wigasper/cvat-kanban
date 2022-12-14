@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Typography, Row, Col, Button, message } from "antd";
 import { logout } from "../services/logout";
 
@@ -13,8 +13,6 @@ function Header({ loggedInStatus, setLoggedInStatus }) {
   };
 
   const getAuthNavComponent = (loggedIn) => {
-    const tok = localStorage.getItem("token");
-
     if (loggedIn) {
       return <Button onClick={logoutActions}>Logout</Button>;
     } else {

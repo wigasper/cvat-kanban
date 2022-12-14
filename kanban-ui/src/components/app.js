@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import logo from "../logo.svg";
 import KanbanPageComponent from "./kanban-page/kanban-page.js";
 
 import Header from "./header";
