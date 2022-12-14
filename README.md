@@ -8,6 +8,18 @@ provides a kanban board engineered specifically for image annotation
 projects, with task-specific design features that are 
 not present in general purpose kanban board web apps. 
 
+## Deployment
+
+First, make sure to generate a secret key and store it in `.env`.
+For example, from the root project directory:
+
+```bash
+key=`python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`
+echo -e "SECRET_KEY = '$key'" >> .env
+```
+
+Or, just generate a random string some other way.
+
 ## Installation
 
 Currently, only a development deployment is supported. This is
