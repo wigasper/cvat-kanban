@@ -22,6 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY", None)
 
+if SYSTEM_ENV == "GITHUB_WORKFLOW":
+    SECRET_KEY = "testing_key"
+
 if SECRET_KEY is None:
     raise ValueError("SECRET_KEY env variable needs to be set")
 
@@ -95,8 +98,7 @@ SYSTEM_ENV = os.environ.get("SYSTEM_ENV", None)
 
 if SYSTEM_ENV == "GITHUB_WORKFLOW":
     DEBUG = True
-    SECRET_KEY = "TESTING_KEY"
-
+    
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
