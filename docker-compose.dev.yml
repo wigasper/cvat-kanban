@@ -1,0 +1,38 @@
+version: "3.3"
+   
+services:
+  db:
+    image: postgres
+    volumes:
+      - db:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+        #networks:
+        #- main
+  web:
+    build: .
+    image: app
+    command: bash /src/backend/entrypoint.sh
+    volumes:
+      - .:/src
+      - static_volume:/src/backend/django_static
+      - media:/src/data/media
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      SECRET_KEY: $SECRET_KEY
+        #networks:
+        #- main
+
+volumes:
+  db:
+  static_volume: 
+  media:
+
+    #networks:
+    #main:
+    #driver: bridge
