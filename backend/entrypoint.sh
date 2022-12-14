@@ -3,7 +3,7 @@ cd /src/backend
 python manage.py makemigrations
 python manage.py migrate
 
-if [[ $SYSTEM_ENV == "development" && ! -f initialized  ]]; then
+if [[ ! -f initialized ]]; then
 	python3 manage.py initdata
 	touch initialized
 fi
