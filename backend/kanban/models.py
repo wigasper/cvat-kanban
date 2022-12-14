@@ -56,9 +56,8 @@ class KanbanCard(models.Model):
     difficulty = models.PositiveSmallIntegerField(default=0)
 
     num_structures = models.PositiveIntegerField(default=0)
-    
+
     thumbnail = models.ImageField(upload_to="images", null=True)
-    #thumbnail = models.ForeignKey(ThumbnailImage, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         ordering = ["position"]

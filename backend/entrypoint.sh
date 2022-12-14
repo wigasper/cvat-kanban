@@ -8,4 +8,6 @@ if [[ ! -f initialized ]]; then
 	touch initialized
 fi
 
+python manage.py collectstatic --noinput
+
 gunicorn backend.wsgi -b 0.0.0.0:8000 -w 2

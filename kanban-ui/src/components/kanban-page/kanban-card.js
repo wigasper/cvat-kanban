@@ -5,25 +5,15 @@ import { Draggable } from "react-beautiful-dnd";
 import "antd/dist/antd.css";
 import "./kanban-card.css";
 
-import { Button, Modal, Form, Input } from "antd";
+import { Button, Modal } from "antd";
 
-import { deleteCard, patchCard, getCard } from "../../services/card";
-
-// import { EditOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { deleteCard } from "../../services/card";
 
 import { Card, Col, Row, Descriptions, Popconfirm } from "antd";
 
 function KanbanCardComponent({ card, index, onDelete }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmModalLoading, setConfirmModalLoading] = useState(false);
-
-  const [form] = Form.useForm();
-
-  const onFinish = (values) => {};
-
-  const onReset = () => {
-    form.resetFields();
-  };
 
   const getThumbnail = (dim) => {
     if (card.thumbnail !== null) {
@@ -41,13 +31,6 @@ function KanbanCardComponent({ card, index, onDelete }) {
     } else {
       return card.user.username;
     }
-    /*const thisUser = getCard(card.id).then((res) => {return res.user});
-    console.log(thisUser); 
-    if (thisUser !== null) {
-      return thisUser;
-    } else {
-      return "None";
-    }*/
   };
 
   const showModal = () => {
@@ -59,7 +42,6 @@ function KanbanCardComponent({ card, index, onDelete }) {
     setTimeout(() => {
       setModalOpen(false);
       setConfirmModalLoading(false);
-      onReset();
     }, 100);
   };
 
@@ -74,7 +56,6 @@ function KanbanCardComponent({ card, index, onDelete }) {
       <Modal
         title={card.name}
         open={modalOpen}
-        onOk={handleAddCard}
         confirmLoading={confirmModalLoading}
         onCancel={handleCancel}
       >
@@ -94,8 +75,14 @@ function KanbanCardComponent({ card, index, onDelete }) {
         </Row>
         <Row>
           <Col>
-            <Popconfirm title="Are you sure?" onConfirm={deleteThisCard}>
-              <Button danger>Delete</Button>
+            <Popconfirm
+              title="Are you sure?"
+              onConfirm={deleteThisCard}
+              disabled={checkLoggedIn()}
+            >
+              <Button danger disabled={checkLoggedIn()}>
+                Delete
+              </Button>
             </Popconfirm>
           </Col>
         </Row>
@@ -103,13 +90,7 @@ function KanbanCardComponent({ card, index, onDelete }) {
     );
   };
 
-  const handleAddCard = () => {
-    form.submit();
-    closeCard();
-  };
-
   const handleCancel = () => {
-    onReset();
     setModalOpen(false);
   };
 
@@ -128,9 +109,24 @@ function KanbanCardComponent({ card, index, onDelete }) {
     return <span style={{ color: colorMap[card.difficulty] }}>{bars}</span>;
   };
 
+  const checkLoggedIn = () => {
+    const token = localStorage.getItem("token");
+
+    if (token === null) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const renderCard = () => {
     return (
-      <Draggable key={card.id} draggableId={card.id + ""} index={index}>
+      <Draggable
+        key={card.id}
+        draggableId={card.id + ""}
+        index={index}
+        isDragDisabled={checkLoggedIn()}
+      >
         {(provided) => (
           <Card
             className="kanban-card"

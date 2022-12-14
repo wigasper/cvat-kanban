@@ -121,7 +121,7 @@ class KanbanCardModelTest(TestCase):
         col_0.name = "To Do"
         col_0.position = 0
         col_0.save()
-        
+
         card = models.KanbanCard()
         card.name = "make pizza"
         card.column = col_0
@@ -133,7 +133,7 @@ class KanbanCardModelTest(TestCase):
         card_1.save()
 
         existing_positions = []
-        
+
         relevant_cards = models.KanbanCard.objects.filter(column__id=col_0.id)
 
         for card in relevant_cards.all():

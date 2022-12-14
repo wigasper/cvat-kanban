@@ -16,17 +16,23 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SYSTEM_ENV = os.environ.get("SYSTEM_ENV", None)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY", None)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if SYSTEM_ENV == "GITHUB_WORKFLOW":
+    SECRET_KEY = "testing_key"
 
-ALLOWED_HOSTS = []
+if SECRET_KEY is None:
+    raise ValueError("SECRET_KEY env variable needs to be set")
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+
+ALLOWED_HOSTS = ["localhost", "0.0.0.0"]
 
 
 # Application definition
@@ -34,7 +40,10 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "corsheaders",
     "kanban.apps.KanbanConfig",
+    "accounts.apps.AccountsConfig",
     "rest_framework",
+    "rest_framework.authtoken",
+    "djoser",
     "django_extensions",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -86,12 +95,9 @@ MEDIA_URL = "/media/"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-SYSTEM_ENV = os.environ.get("SYSTEM_ENV", None)
-
 if SYSTEM_ENV == "GITHUB_WORKFLOW":
     DEBUG = True
-    SECRET_KEY = "TESTING_KEY"
-
+    
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -113,6 +119,9 @@ else:
             "PORT": 5432,
         }
     }
+
+if SYSTEM_ENV == "development":
+    DEBUG = True
 
 
 # Password validation
@@ -151,16 +160,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = "/static/"
-
+STATIC_URL = "/django_static/"
+STATIC_ROOT = BASE_DIR / "django_static"
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+    ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly",
+        "rest_framework.permissions.IsAuthenticated",
     ],
     "DEFAULT_THROTTLE_CLASSES": (
         "rest_framework.throttling.AnonRateThrottle",
@@ -168,11 +181,13 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.ScopedRateThrottle",
     ),
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "180/minute",
+        "anon": "60/minute",
         "user": "180/minute",
         "/api/get-items": "180/minute",
     },
 }
+
+DJOSER = {"USER_ID_FIELD": "username"}
 
 # for frontend api calls
 CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
