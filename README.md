@@ -53,6 +53,12 @@ The admin panel is then available at `http://$HOST/admin/`.
 For the current scope and deployment of this project, account
 creation is not supported outside of the admin panel.
 
+## Deploying with SSL
+
+As a template for deployment with SSL, an nginx configuration 
+file and docker-compose are given in `/nginx/conf.d/nginx_ssl.conf` and
+`docker-compose.ssl-yml`.
+
 ## API endpoints
 
 There are several DRF browsable endpoints available at 
