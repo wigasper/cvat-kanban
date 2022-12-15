@@ -7,6 +7,9 @@ import { UploadOutlined } from "@ant-design/icons";
 
 import { addCardMultipart } from "../../services/card";
 
+// Add card modal. columnID for the card POST,
+// onSubmit to (hopefully) trigger a parent
+// re-render after submitting
 function AddCardModalComponent({ columnID, onSubmit }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmModalLoading, setConfirmModalLoading] = useState(false);
@@ -15,6 +18,7 @@ function AddCardModalComponent({ columnID, onSubmit }) {
 
   const [form] = Form.useForm();
 
+  // Logic for form submission
   const onFinish = (values) => {
     let data = new FormData();
     data.append("user", 1);
@@ -33,6 +37,7 @@ function AddCardModalComponent({ columnID, onSubmit }) {
     onSubmit(true);
   };
 
+  // Reset the form
   const onReset = () => {
     setModalText("");
     form.resetFields();
@@ -42,6 +47,7 @@ function AddCardModalComponent({ columnID, onSubmit }) {
     setModalOpen(true);
   };
 
+  // Logic for uploading an image
   const addImage = async (options) => {
     const { onSuccess, onError, file, onProgress } = options;
 
@@ -58,6 +64,7 @@ function AddCardModalComponent({ columnID, onSubmit }) {
     }
   };
 
+  // Upload component props, used in renderModal()
   const uploadProps = {
     name: "file",
     customRequest: addImage,
@@ -100,6 +107,7 @@ function AddCardModalComponent({ columnID, onSubmit }) {
     );
   };
 
+  // Logic when finalizing the modal
   const handleAddCard = () => {
     setModalText("Adding card");
     form.submit();
@@ -111,6 +119,7 @@ function AddCardModalComponent({ columnID, onSubmit }) {
     }, 600);
   };
 
+  // Reset everything
   const handleCancel = () => {
     onReset();
     setModalOpen(false);

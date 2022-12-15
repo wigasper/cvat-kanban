@@ -60,7 +60,10 @@ class KanbanCard(models.Model):
 
     def __str__(self) -> str:
         return self.name
-
+    
+    # Override the save logic. This is to create a good default position
+    # for the card: need to check all other cards in the column and then
+    # set the card to the max(positions) + 1
     def save(self, *args, **kwargs):
         if self.column and self.position == -1:
             relevant_cards = KanbanCard.objects.filter(column__id=self.column.id)

@@ -11,10 +11,14 @@ import { deleteCard } from "../../services/card";
 
 import { Card, Col, Row, Descriptions, Popconfirm } from "antd";
 
+// KanbanCard. Args: card object, index (position in column), and
+// onDelete function to (hopefully) trigger a parent component
+// re-render on deletion
 function KanbanCardComponent({ card, index, onDelete }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmModalLoading, setConfirmModalLoading] = useState(false);
 
+  // Returns the thumbnail component
   const getThumbnail = (dim) => {
     if (card.thumbnail !== null) {
       return (
@@ -36,7 +40,8 @@ function KanbanCardComponent({ card, index, onDelete }) {
   const showModal = () => {
     setModalOpen(true);
   };
-
+  
+  // Actions for card closing
   const closeCard = () => {
     setConfirmModalLoading(true);
     setTimeout(() => {
@@ -50,7 +55,8 @@ function KanbanCardComponent({ card, index, onDelete }) {
     onDelete(true);
     closeCard();
   };
-
+  
+  // Returns the card modal
   const getModal = () => {
     return (
       <Modal
@@ -90,10 +96,13 @@ function KanbanCardComponent({ card, index, onDelete }) {
     );
   };
 
+  // Actions when "cancel" is clicked in the modal
   const handleCancel = () => {
     setModalOpen(false);
   };
 
+  // Difficulty map: maps an integer to UTF-8 bars
+  // of specified colors
   const getDifficulty = () => {
     const colorMap = {
       0: "black",
@@ -108,7 +117,8 @@ function KanbanCardComponent({ card, index, onDelete }) {
 
     return <span style={{ color: colorMap[card.difficulty] }}>{bars}</span>;
   };
-
+  
+  // Checks for a token to call logged in
   const checkLoggedIn = () => {
     const token = localStorage.getItem("token");
 

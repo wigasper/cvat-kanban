@@ -6,8 +6,11 @@ import LoginPage from "./login/login-page";
 
 import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 
+// Main app function
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+
+  // loading is used to check for logged in status
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

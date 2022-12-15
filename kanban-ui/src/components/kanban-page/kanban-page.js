@@ -12,6 +12,7 @@ import { Col, Row } from "antd";
 
 import "antd/dist/antd.css";
 
+// Main kanban board page component
 function KanbanPageComponent() {
   const [columns, setColumns] = useState([]);
 
@@ -28,6 +29,10 @@ function KanbanPageComponent() {
     return () => setLoading(false);
   }, [columns, loading]);
 
+  // Update the web server with PATCH calls
+  // after cards are moved. This will only update
+  // cards that have changes in position or
+  // column
   const updateBackend = (column) => {
     column.cards.forEach((card, index) => {
       const cardUpdate = {};
@@ -45,7 +50,14 @@ function KanbanPageComponent() {
       }
     });
   };
-
+  
+  // After a card is dragged and dropped, this 
+  // logic is executed. If there is a change in 
+  // position or column, the columns array is copied,
+  // the relevant changes (card placement) are made in 
+  // the copy, and then the copy is set to the state.
+  // Additionally, all needed PATCH calls are made to 
+  // persist the changes on the backend
   const onDragEnd = (res) => {
     const { destination, source } = res;
 

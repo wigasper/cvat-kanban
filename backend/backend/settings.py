@@ -23,9 +23,11 @@ SYSTEM_ENV = os.environ.get("SYSTEM_ENV", None)
 
 SECRET_KEY = os.environ.get("SECRET_KEY", None)
 
+# make a simple secret key for CI
 if SYSTEM_ENV == "GITHUB_WORKFLOW":
     SECRET_KEY = "testing_key"
 
+# raise ValueError if there is no secret key
 if SECRET_KEY is None:
     raise ValueError("SECRET_KEY env variable needs to be set")
 
@@ -87,6 +89,7 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # TODO there should probably be some logic here to deal with
 # fixtures and dev environment things
 
+# media directory
 MEDIA_ROOT = os.path.join(str(Path(BASE_DIR).parent), "data/media")
 os.makedirs(MEDIA_ROOT, exist_ok=True)
 
@@ -98,6 +101,8 @@ MEDIA_URL = "/media/"
 if SYSTEM_ENV == "GITHUB_WORKFLOW":
     DEBUG = True
     
+    # use localhost if GITHUB_WORKFLOW, don't want to 
+    # run tests as a container in a container
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -120,6 +125,7 @@ else:
         }
     }
 
+# turn debug on if in development
 if SYSTEM_ENV == "development":
     DEBUG = True
 

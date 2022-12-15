@@ -3,7 +3,12 @@ from django.contrib.auth.models import User
 
 from kanban import models
 
-
+# This serializer exists for use by the KanbanCardSerializer
+# It is helpful for the UI to have the username in the 
+# response to avoid a second request, BUT I want to avoid
+# having all the cards in order to reduce the response size
+# and this might be a security issue anyways (in a much greater
+# scope project)
 class UsernameOnlyUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -14,7 +19,9 @@ class KanbanCardSerializer(serializers.ModelSerializer):
     column = serializers.PrimaryKeyRelatedField(
         many=False, queryset=models.KanbanColumn.objects.all()
     )
-
+    
+    # Use the UsernameOnlyUserSerializer to just get the 
+    # ID and username for the user
     user = UsernameOnlyUserSerializer(read_only=True)
 
     class Meta:

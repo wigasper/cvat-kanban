@@ -4,14 +4,18 @@ import { logout } from "../services/logout";
 
 const { Title } = Typography;
 
+// Header function, arg.s for parent state
 function Header({ loggedInStatus, setLoggedInStatus }) {
-  const logoutActions = () => {
+  // perform actions on loggedout
+	const logoutActions = () => {
     logout();
     localStorage.removeItem("token");
     setLoggedInStatus(false);
     message.success("Logged out");
   };
 
+  // get the necessary authentication button based on
+  // logged-in status
   const getAuthNavComponent = (loggedIn) => {
     if (loggedIn) {
       return <Button onClick={logoutActions}>Logout</Button>;

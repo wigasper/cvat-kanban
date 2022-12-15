@@ -9,6 +9,10 @@ import { Card } from "antd";
 
 import KanbanCardComponent from "./kanban-card";
 
+// Kanban column. Args: column is an object with all 
+// the data, onCardDelete is a function passed to 
+// each card to (hopefully) trigger a parent re-render
+// on card deletion
 function KanbanColumnComponent({ column, onCardDelete }) {
   const renderColumn = () => {
     return (
