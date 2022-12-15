@@ -36,10 +36,6 @@ class KanbanColumn(models.Model):
         return self.name
 
 
-class ThumbnailImage(models.Model):
-    image = models.ImageField(upload_to="images")
-
-
 class KanbanCard(models.Model):
     name = models.CharField("Card name", max_length=120)
 

@@ -33,8 +33,3 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.UserSerializer
     permission_classes = [permissions.IsAdminUser]
 
-
-class ThumbnailImageViewSet(viewsets.ModelViewSet):
-    queryset = models.ThumbnailImage.objects.all()
-    serializer_class = serializers.ThumbnailImageSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
