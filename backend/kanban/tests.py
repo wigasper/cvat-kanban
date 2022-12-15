@@ -4,26 +4,8 @@ from django.contrib.auth.models import User
 
 from kanban import models
 
-# TODO set up these tests differently
-# do not need the setup like this, problematic
-# as pks will vary based on other tests
-
 
 class KanbanColumnModelTest(TestCase):
-    #    @classmethod
-    #    def setUpTestData(cls):
-    #        test_user = User.objects.create_user(username="testuser", password="23wesdxc")
-    #        test_user.save()
-
-    # Needs to be fixed after autho updates
-    #    def test_post_column_0(self):
-    #        login = self.client.login(username="testuser", password="23wesdxc")
-
-    #        column = {"name": "Done", "position": 2}
-
-    #        response = self.client.post(reverse("kanban:columns-list"), column)
-    #        self.assertEqual(response.status_code, 201)
-
     def test_get_column_0(self):
         col = models.KanbanColumn()
         col.name = "To Do"
@@ -49,29 +31,6 @@ class KanbanColumnModelTest(TestCase):
 
 
 class KanbanCardModelTest(TestCase):
-    # unclear why this is failing, it was working before serializer changes
-    #
-    # probably just leave POST testing for proper integration testing
-
-    #    @classmethod
-    #    def setUpTestData(cls):
-    #        test_user = User.objects.create_user(username="testuser2", password="23wesdxc")
-    #        test_user.save()
-    #
-    #    def test_post_card_0(self):
-    #        login = self.client.login(username="testuser2", password="23wesdxc")
-    #        self.assertTrue(login)
-    #
-    #        col_0 = models.KanbanColumn()
-    #        col_0.name = "To Do"
-    #        col_0.position = 0
-    #        col_0.save()
-    #
-    #        card = {"name": "brush dog", "column": col_0.pk}
-    #
-    #        response = self.client.post(reverse("kanban:cards-list"), card, format="json")
-    #        self.assertEqual(response.status_code, 201)
-
     def test_get_card_0(self):
         card = models.KanbanCard()
         card.name = "make pizza"
