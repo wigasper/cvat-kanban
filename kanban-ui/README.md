@@ -1,5 +1,6 @@
 # User interface organization
 
+```
 src
 ├── components
 │   ├── app.css
@@ -26,6 +27,7 @@ src
 │   ├── login.js
 │   └── logout.js
 └── setupTests.js
+```
 
 Hopefully, organization is self-explanatory. `components` contains the main `app.js` and 
 `header.js` components in the base dir, with Kanban board components in `kanban-page`

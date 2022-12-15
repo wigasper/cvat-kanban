@@ -1,5 +1,5 @@
 # Web server organization
-
+```
 ├── accounts
 │   └── migrations
 ├── backend
@@ -8,6 +8,7 @@
     ├── management
     │   └── commands
     └── migrations
+```
 
 The `accounts` app provides endpoints for token-based authentication 
 from the `doser` package. The `kanban` app provides the Kanban
